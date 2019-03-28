@@ -105,7 +105,7 @@ async function _transactionsPerBlock(range, skipRender) {
                             // display: false
                             reverse: true,
                             labels: {
-                                fontFamily: "'Source Sans Pro', sans-serif",
+                                fontFamily: "'Nunito', 'Source Sans Pro', sans-serif",
                                 fontSize: 16,
                                 boxWidth: 16
                             }
@@ -118,7 +118,7 @@ async function _transactionsPerBlock(range, skipRender) {
                                     scaleLabel: {
                                         display: true,
                                         labelString: "Transaction Volume",
-                                        fontFamily: "'Source Sans Pro', sans-serif",
+                                        fontFamily: "'Nunito', 'Source Sans Pro', sans-serif",
                                         fontSize: 16
                                     }
                                 },
@@ -128,7 +128,7 @@ async function _transactionsPerBlock(range, skipRender) {
                                     scaleLabel: {
                                         display: true,
                                         labelString: "Transactions",
-                                        fontFamily: "'Source Sans Pro', sans-serif",
+                                        fontFamily: "'Nunito', 'Source Sans Pro', sans-serif",
                                         fontSize: 16
                                     }
                                 }

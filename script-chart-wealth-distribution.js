@@ -79,7 +79,7 @@ async function _wealthDistribution(axisType = "linear", skipRender = false) {
                         scaleLabel: {
                             display: true,
                             labelString: "Balance in NIM",
-                            fontFamily: "'Source Sans Pro', sans-serif",
+                            fontFamily: "'Nunito', 'Source Sans Pro', sans-serif",
                             fontSize: 16
                         }
                     }],
@@ -87,7 +87,7 @@ async function _wealthDistribution(axisType = "linear", skipRender = false) {
                         scaleLabel: {
                             display: true,
                             labelString: "Accounts (ordered by balance)",
-                            fontFamily: "'Source Sans Pro', sans-serif",
+                            fontFamily: "'Nunito', 'Source Sans Pro', sans-serif",
                             fontSize: 16
                         }
                     }]

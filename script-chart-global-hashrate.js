@@ -97,7 +97,7 @@ function _globalHashrate(range, skipRender) {
                                 scaleLabel: {
                                     display: true,
                                     labelString: "Hashrate",
-                                    fontFamily: "'Source Sans Pro', sans-serif",
+                                    fontFamily: "'Nunito', 'Source Sans Pro', sans-serif",
                                     fontSize: 16
                                 }
                             }]

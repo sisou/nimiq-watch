@@ -19,6 +19,7 @@
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#fafafa">
 
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
     <link rel="stylesheet" href="/vendor/source-sans-pro/source-sans-pro.css">
     <link rel="stylesheet" href="/vendor/fira/fira.css">
 
@@ -574,7 +575,7 @@
             <span class="show-mobile">{%=o.transaction_count%} tx{% if(o.transaction_count !== 1) print('s'); %}</span>
         </div>
         <div class="blocklist-cell miner-address ellipsis">
-            <span class="hide-mobile">found by </span><hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
+            <hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
         </div>
         <div class="blocklist-cell hide-xs">
             {%=_formatSize(o.size)%}
