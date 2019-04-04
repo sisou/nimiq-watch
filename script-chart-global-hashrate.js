@@ -92,7 +92,7 @@ function _globalHashrate(range, skipRender) {
                             yAxes: [{
                                 ticks: {
                                     beginAtZero: true,
-                                    callback: _humanReadableHashesPerSecond
+                                    callback: _formatHashrate
                                 },
                                 scaleLabel: {
                                     display: true,
@@ -104,7 +104,7 @@ function _globalHashrate(range, skipRender) {
                         },
                         tooltips: {
                             callbacks: {
-                                label: _humanReadableHashesPerSecond
+                                label: _formatHashrate
                             }
                         },
                         animation: {
@@ -128,32 +128,15 @@ function _globalHashrate(range, skipRender) {
     });
 }
 
-function _humanReadableHashesPerSecond(arg1, arg2) {
+function _formatHashrate(hashrateOrPoint, roundToTwo) {
     var value;
-    if(typeof arg1 === "number")
-        value = arg1;
+    if(typeof hashrateOrPoint === "number")
+        value = hashrateOrPoint;
     else
-        value = arg1.yLabel;
+        value = hashrateOrPoint.yLabel;
 
-    var resultValue = 0;
-    var resultUnit = "";
-
-    const unit_prefix = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
-
-    for (let i = 0; i < unit_prefix.length - 1; i++) {
-        if (value < 1000) {
-            resultValue = value;
-            resultUnit = unit_prefix[i] + "H/s";
-            break;
-        }
-        value = value / 1000;
-    }
-
-    if(arg2) {
-        resultValue = Math.round(resultValue * 100) / 100;
-    }
-
-    return resultValue + " " + resultUnit;
+    const result = _prepareHashrate(value, roundToTwo && 2);
+    return result.value + " " + result.unit;
 }
 
 function switchGlobalHashrateRange(range) {

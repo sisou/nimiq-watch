@@ -210,6 +210,14 @@
         <a target="_blank" href="https://github.com/sisou/nimiq-watch">View Source Code on Github.</a>
     </footer>
 
+    <script type="text/x-tmpl" id="template-quick-stats">
+        Hashrate: {%=_prepareHashrate(o.hashrate[6], 1).value.toFixed(1)%} {%=_prepareHashrate(o.hashrate[6]).unit%} |
+        {%=_calculateDelta(o.hashrate[5], o.hashrate[6])%}% <br>
+        Throughput: {%=(o.throughput[6] / 24 / 60).toFixed(2)%} TX/min | {%=_calculateDelta(o.throughput[5], o.throughput[6])%}% <br>
+        Volume: {%=_formatBalance(o.volume[6] / 1e5, 0)%} NIM | {%=_calculateDelta(o.volume[5], o.volume[6])%}% <br>
+        Value: {%=_formatBalance(o.value.usd[6] * 100, 3)%} cents | {%=_calculateDelta(o.value.usd[5], o.value.usd[6])%}%
+    </script>
+
     <script type="text/x-tmpl" id="template-block-info">
         <h2>Block Info</h2>
         <div class="blockinfo-header">
@@ -543,7 +551,7 @@
             <span class="show-mobile">{%=o.transaction_count%} tx{% if(o.transaction_count !== 1) print('s'); %}</span>
         </div>
         <div class="blocklist-cell miner-address ellipsis">
-            <span class="hide-mobile">found by </span><hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
+            <hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
         </div>
         <div class="blocklist-cell hide-xs">
             {%=_formatSize(o.size)%}
@@ -585,6 +593,7 @@
     </script>
 
     <script src="./script.js"></script>
+    <script src="./QuickStats.js"></script>
     <script>
         if(useTestnet) {
             document.head.querySelector('title').textContent = 'TESTNET.WATCH Blockchain Explorer';

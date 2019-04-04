@@ -4,6 +4,7 @@ var accountHashRegExp = new RegExp('^NQ[A-Z0-9 ]{42}'),
     blockHashRegExp   = new RegExp('^[A-F0-9]{64}$');
 
 var template = {
+    quickStats:                tmpl('template-quick-stats'),
     blocklistBlock:            tmpl('template-blocklist-block'),
     blockInfo:                 tmpl('template-block-info'),
     txInfo:                    tmpl('template-tx-info'),
@@ -49,11 +50,15 @@ function _detectHashFormat(value) {
     else return false;
 }
 
-function _formatBalance(value) {
+function _formatBalance(value, decimals) {
     var valueStr = '';
 
+    if (typeof decimals !== 'undefined') {
+        value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+        valueStr = value.toFixed(decimals);
+    }
     // If the value has no decimal places below 0.01, display 2 decimals
-    if(parseFloat(value.toFixed(2)) === value) {
+    else if(parseFloat(value.toFixed(2)) === value) {
         valueStr = value.toFixed(2);
     }
     // Otherwise, all required decimals will be displayed automatically
@@ -62,7 +67,7 @@ function _formatBalance(value) {
     var ints = _formatThousands(valueStr.split('.')[0]);
     var decs = valueStr.split('.')[1];
 
-    return ints + '.' + decs;
+    return ints + (decs && '.' + decs || '');
 }
 
 function _formatThousands(number, separator) {
@@ -156,6 +161,47 @@ function _labelAddress(address, shorten) {
     if(label)        return label;
     else if(shorten) return address.substr(0, 20) + '…';
     else             return address;
+}
+
+function _prepareHashrate(hashrate, decimals = 2) {
+    var resultValue = 0;
+    var resultUnit = "";
+    var unit_prefix = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
+
+    for (let i = 0; i < unit_prefix.length - 1; i++) {
+        if (hashrate < 1000) {
+            resultValue = hashrate;
+            resultUnit = unit_prefix[i] + "H/s";
+            break;
+        }
+        hashrate = hashrate / 1000;
+    }
+
+    if (typeof decimals !== 'undefined') {
+        resultValue = Math.round(resultValue * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    }
+
+    return {
+        value: resultValue,
+        unit: resultUnit,
+    };
+}
+
+function _calculateDelta(oldValue, newValue) {
+    var diff = newValue - oldValue;
+
+    return _formatBalance(diff / oldValue * 100, 1);
+}
+
+function _getQuickStats(callback) {
+    fetch(apiUrl + '/quick-stats').then(function(response) {
+        response.json().then(function(data) {
+            if(data.error) alert('Error: ' + data.error);
+            if(!data) alert('No data received from https://api.nimiq.watch/quick-stats!');
+
+            callback(data);
+        });
+    });
 }
 
 function _getAccountInfo(address, callback) {
@@ -450,6 +496,12 @@ function _addBlockToListOfLatestBlocks(blockInfo, append) {
     append && blocklistNode.appendChild(item) || blocklistNode.insertBefore(item, blocklistNode.firstChild);
 }
 
+function _quickStats() {
+    _getQuickStats(function(data) {
+        $infobox.innerHTML = template.quickStats(data);
+    });
+}
+
 function _onHashChange(e) {
     try {
         ga('set', 'page', location.pathname + location.search + location.hash);
@@ -475,7 +527,8 @@ function _onHashChange(e) {
 
     if(value === "" || value === "search") {
         // Display homepage
-        $infobox.textContent = "";
+        // $infobox.textContent = "";
+        _quickStats();
         $searchInput.value = "";
         value === "search" && $searchInput.focus();
         window.scrollTo(0, 0);

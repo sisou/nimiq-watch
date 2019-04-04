@@ -218,7 +218,7 @@ header .submenu a:hover {
 }
 
 #searchbox h1 {
-    font-weight: normal;
+    font-weight: inherit;
     text-align: center;
     margin: 40px 0;
 }
@@ -779,9 +779,9 @@ a.info-icon:active {
 
 a.blocklist-cell::after {
     position: absolute;
-    left: 20%;
+    left: 15%;
     bottom: 10px;
-    width: 60%;
+    width: 70%;
     content: "";
     border-bottom: 1px dotted;
 }
