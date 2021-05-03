@@ -551,6 +551,7 @@ hash {
 .blockinfo-body-row {
     margin: 0.75em 0;
     min-height: 1.4em;
+    overflow: auto;
 }
 
 .blockinfo-body-row label,
@@ -573,7 +574,7 @@ hash {
 }
 
 .blockinfo-extra-data {
-    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .blockinfo-transactions {
