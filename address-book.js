@@ -291,6 +291,7 @@ AddressBook.BOOK = {
     'NQ36 GF5L 9SYL PKQ1 DTTH 608Q 9AC3 0NVL HH8H': '@Maxime',
     'NQ08 JYY6 7V0F EL7J CYNX RH78 TGD1 HP64 CSKG': '@Thomas',
     'NQ73 YP0M S7M4 VV5M T6EA 5XL4 QS7E 5CUK QEU8': '@toto',
+    'NQ38 KCJ8 X2JK LEEH 4HYL 7D61 3T3P RCNG GJ2C': '@NimiqX',
     // '': '@',
     // '': '@',
 
