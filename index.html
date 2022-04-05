@@ -498,36 +498,26 @@
             </div>
 
             <div class="accountinfo-transactions">
-                {% if(o.transactions.length > 0) { %}
-                    {% for(var i = o.transactions.length - 1; i >= 0; i--) { %}
-                        {% o.transactions[i].isReceiver = o.transactions[i].receiver_address === o.address; %}
-                        {%#o.accountTransaction(o.transactions[i])%}
-                    {% } %}
-
-                    {% if(o.transactions.length >= 10) { %}
-                        <button class="event-loadmore" onclick="loadMoreTransactions(this, '{%=o.address%}')" data-page="2">Load more</button>
-                    {% } else { %}
-                        <div class="no-more">No earlier transactions</div>
-                    {% } %}
-                {% } else { %}
-                    <div class="no-more">No transactions</div>
+                {% for(var i = o.transactions.length - 1; i >= 0; i--) { %}
+                    {% o.transactions[i].isReceiver = o.transactions[i].receiver_address === o.address; %}
+                    {%#o.accountTransaction(o.transactions[i])%}
                 {% } %}
+
+                <div class="blocklist-loader transaction-loader" data-page="1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.922382 46.027046" height="46.027046mm" width="45.922382mm"><g fill="#ffc107" fill-rule="evenodd"><path d="M19.326194 1.029874C18.994341.461027 18.191007 0 17.533238 0H7.199695c-.658756 0-1.460603.461027-1.792971 1.029874L.2489 9.879957c-.331867.568829-.331867 1.491401 0 2.060247l5.157824 8.850065c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333543c.658756 0 1.460603-.461027 1.792956-1.030375l5.157824-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".66666667"/><path d="M40.515659 13.128918c-.331867-.568847-1.135201-1.029874-1.792971-1.029874H28.389146c-.658756 0-1.460603.461027-1.792956 1.029874L21.438366 21.979c-.331867.568829-.331867 1.491401 0 2.060248l5.157824 8.850065c.331867.568847 1.135201 1.030375 1.792956 1.030375h10.333542c.658756 0 1.460604-.461028 1.792971-1.030375l5.157825-8.850065c.331866-.568847.331866-1.490918 0-2.060248z"/><path d="M19.501729 25.236275c-.331867-.568847-1.135201-1.029874-1.79297-1.029874H7.375231c-.658756 0-1.460603.461027-1.792971 1.029874L.424436 34.086358c-.331867.568829-.331867 1.491401 0 2.060247L5.58226 44.99667c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333528c.65877 0 1.460617-.461027 1.79297-1.030375l5.157825-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".33333333"/></g></svg>
+                </div>
+                <button class="event-loadmore hidden" onclick="loadMoreTransactions(this, '{%=o.address%}')" data-page="2">Load more</button>
             </div>
 
             <div class="accountinfo-blocks hidden">
-                {% if(o.blocks.length > 0) { %}
-                    {% for(var i = o.blocks.length - 1; i >= 0; i--) { %}
-                        {%#o.accountBlock(o.blocks[i])%}
-                    {% } %}
-
-                    {% if(o.blocks.length >= 10) { %}
-                        <button class="event-loadmore" onclick="loadMoreBlocks(this, '{%=o.address%}')" data-page="2">Load more</button>
-                    {% } else { %}
-                        <div class="no-more">No earlier blocks</div>
-                    {% } %}
-                {% } else { %}
-                    <div class="no-more">No blocks mined</div>
+                {% for(var i = o.blocks.length - 1; i >= 0; i--) { %}
+                    {%#o.accountBlock(o.blocks[i])%}
                 {% } %}
+
+                <div class="blocklist-loader block-loader" data-page="1" data-address="{%=o.address%}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.922382 46.027046" height="46.027046mm" width="45.922382mm"><g fill="#ffc107" fill-rule="evenodd"><path d="M19.326194 1.029874C18.994341.461027 18.191007 0 17.533238 0H7.199695c-.658756 0-1.460603.461027-1.792971 1.029874L.2489 9.879957c-.331867.568829-.331867 1.491401 0 2.060247l5.157824 8.850065c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333543c.658756 0 1.460603-.461027 1.792956-1.030375l5.157824-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".66666667"/><path d="M40.515659 13.128918c-.331867-.568847-1.135201-1.029874-1.792971-1.029874H28.389146c-.658756 0-1.460603.461027-1.792956 1.029874L21.438366 21.979c-.331867.568829-.331867 1.491401 0 2.060248l5.157824 8.850065c.331867.568847 1.135201 1.030375 1.792956 1.030375h10.333542c.658756 0 1.460604-.461028 1.792971-1.030375l5.157825-8.850065c.331866-.568847.331866-1.490918 0-2.060248z"/><path d="M19.501729 25.236275c-.331867-.568847-1.135201-1.029874-1.79297-1.029874H7.375231c-.658756 0-1.460603.461027-1.792971 1.029874L.424436 34.086358c-.331867.568829-.331867 1.491401 0 2.060247L5.58226 44.99667c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333528c.65877 0 1.460617-.461027 1.79297-1.030375l5.157825-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".33333333"/></g></svg>
+                </div>
+                <button class="event-loadmore hidden" onclick="loadMoreBlocks(this, '{%=o.address%}')" data-page="2">Load more</button>
             </div>
         </div>
     </script>

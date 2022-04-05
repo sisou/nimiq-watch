@@ -264,6 +264,10 @@ function _calculateVestingSteps(data) {
     return steps;
 }
 
+/**
+ * @param {HTMLDivElement | HTMLButtonElement} self
+ * @param {string} address
+ */
 function loadMoreTransactions(self, address) {
     var urlAddress = address.replace(/ /g, '+');
     var limit = 10;
@@ -289,11 +293,26 @@ function loadMoreTransactions(self, address) {
             if(transactions.length < limit) {
                 var notice = document.createElement('div');
                 notice.classList.add('no-more');
-                notice.textContent = 'No earlier transactions';
+                if (page === 1 && !transactions.length) {
+                    notice.textContent = 'No transactions';
+                } else {
+                    notice.textContent = 'No earlier transactions';
+                }
                 list.appendChild(notice);
             }
 
             self.parentNode.insertBefore(list, self);
+
+            if (page === 1) {
+                // Remove loader, show load-more button
+                var $loader = self;
+
+                // self is now the load-more button
+                self = self.nextElementSibling;
+                self.classList.remove('hidden');
+
+                $loader.parentNode.removeChild($loader);
+            }
 
             if(transactions.length === limit) {
                 self.setAttribute('data-page', page + 1 );
@@ -305,6 +324,10 @@ function loadMoreTransactions(self, address) {
     });
 }
 
+/**
+ * @param {HTMLDivElement | HTMLButtonElement} self
+ * @param {string} address
+ */
 function loadMoreBlocks(self, address) {
     var urlAddress = address.replace(/ /g, '+');
     var limit = 10;
@@ -328,11 +351,26 @@ function loadMoreBlocks(self, address) {
             if(blocks.length < limit) {
                 var notice = document.createElement('div');
                 notice.classList.add('no-more');
-                notice.textContent = 'No earlier blocks';
+                if (page === 1 && !blocks.length) {
+                    notice.textContent = 'No blocks';
+                } else {
+                    notice.textContent = 'No earlier blocks';
+                }
                 list.appendChild(notice);
             }
 
             self.parentNode.insertBefore(list, self);
+
+            if (page === 1) {
+                // Remove loader, show load-more button
+                var $loader = self;
+
+                // self is now the load-more button
+                self = self.nextElementSibling;
+                self.classList.remove('hidden');
+
+                $loader.parentNode.removeChild($loader);
+            }
 
             if(blocks.length === limit) {
                 self.setAttribute('data-page', page + 1 );
@@ -355,6 +393,13 @@ function switchAccountHistory(selection) {
     else {
         $transactions.classList.add('hidden');
         $blocks.classList.remove('hidden');
+
+        // Trigger loading blocks if the loader is there
+        var $loader = $blocks.getElementsByClassName('block-loader')[0];
+        if ($loader) {
+            var address = $loader.getAttribute('data-address');
+            loadMoreBlocks($loader, address);
+        }
     }
 }
 
@@ -574,6 +619,11 @@ function _onHashChange(e) {
 
                     $infobox.innerHTML = template.accountInfo(accountInfo);
                     window.scrollTo(0, $infobox.offsetTop - 100);
+
+                    var $loader = $infobox.getElementsByClassName('transaction-loader')[0];
+                    if ($loader) {
+                        loadMoreTransactions($loader, accountInfo.address);
+                    }
                 });
                 break;
             case "Tx or Block Hash":

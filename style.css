@@ -502,6 +502,10 @@ hash {
     padding: 0.25em 1em;
 }
 
+.accountinfo-wrapper .transaction-loader {
+    margin-top: 1rem;
+}
+
 .blockinfo-body input {
     padding: 0.15em 0.5em;
     font-size: inherit;
