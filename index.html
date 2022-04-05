@@ -349,7 +349,7 @@
                 {% if(o.data.length > 0) { %}
                     <div class="blockinfo-body-row">
                         <label>Message </label>
-                        <span>{%=_formatTxData(o.data)%}</span>
+                        <span class="blockinfo-extra-data">{%=_formatTxData(o.data)%}</span>
                     </div>
                 {% } %}
                 <div class="blockinfo-body-row">
@@ -395,10 +395,10 @@
                             <label>Label </label>
                             <span>
                                 <form action="https://submit-form.com/UpWwc3rnNvBcfBGT_813W" method="POST">
+                                    <input type="text" name="label" placeholder="Suggest a label" required>
                                     <input type="hidden" name="network" value="{%=location.origin%}">
                                     <input type="hidden" name="address" value="{%=o.address%}">
                                     <input name="username" type="text" style="display:none">
-                                    <input type="text" name="label" placeholder="Suggest a label" required>
                                     <input type="submit" value="Submit">
                                 </form>
                             </span>
