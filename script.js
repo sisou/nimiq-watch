@@ -10,6 +10,7 @@ var template = {
     accountInfo:               tmpl('template-account-info'),
     accountTransaction:        tmpl('template-account-transaction'),
     accountBlock:              tmpl('template-account-block'),
+    faucet:                    tmpl('template-faucet'),
     about:                     tmpl('template-about'),
     charts:                    tmpl('template-charts'),
     labels:                    tmpl('template-labels'),
@@ -577,6 +578,11 @@ function _onHashChange(e) {
         value === "search" && $searchInput.focus();
         window.scrollTo(0, 0);
     }
+    else if(value === "faucet") {
+        $infobox.innerHTML = template.faucet();
+        window.scrollTo(0, $infobox.offsetTop - 100);
+        document.getElementById("faucet-form").addEventListener("submit", _tapFaucet);
+    }
     else if(value === "about") {
         $infobox.innerHTML = template.about();
         window.scrollTo(0, $infobox.offsetTop - 100);
@@ -689,6 +695,33 @@ function _linkClicked(self) {
         // Thus we need to trigger the link manually
         _onHashChange();
     }
+}
+
+function _tapFaucet(event) {
+    event.preventDefault();
+    const $address = document.getElementById('faucet-address');
+    const $message = document.getElementById('faucet-message');
+    $message.classList.remove('success', 'error');
+    fetch(`https://faucet.nimiq-testnet.com/tapit`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ address: $address.value }),
+    }).then((res) => res.json()).then((result) => {
+        if (result.success) {
+            $message.classList.add('success');
+            $message.textContent = result.msg;
+            $address.value = '';
+        } else {
+            $message.classList.add('error');
+            $message.textContent = result.msg;
+        }
+    }).catch((error) => {
+        console.error(error);
+        $message.classList.add('error');
+        $message.textContent = error.message;
+    });
 }
 
 var hasTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;

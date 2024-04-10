@@ -367,6 +367,7 @@ hash {
 
 .about-wrapper,
 .charts-wrapper,
+.faucet-wrapper,
 .labels-wrapper {
     max-width: 600px;
     margin: auto;
@@ -383,12 +384,14 @@ hash {
 
 .about-wrapper h2,
 .charts-wrapper h2,
+.faucet-wrapper h2,
 .labels-wrapper h2 {
     margin-top: 0;
 }
 
 .about-wrapper p,
 .charts-wrapper p,
+.faucet-wrapper p,
 .labels-wrapper ul {
     margin-bottom: 0;
 }
@@ -408,6 +411,41 @@ hash {
 .charts-wrapper a:focus {
     color: #042146;
     background: white;
+}
+
+.faucet-wrapper input {
+    display: block;
+    margin-top: 16px;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 8px;
+    border: 1px solid #D9DEE4;
+    padding: 4px 8px;
+    box-sizing: border-box;
+}
+
+.faucet-wrapper input[type="text"] {
+    width: 100%;
+}
+
+.faucet-wrapper #faucet-message {
+    display: none;
+    border: 1px solid;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.faucet-wrapper #faucet-message.success {
+    display: block;
+    color: darkgreen;
+    background-color: lightgreen;
+}
+
+.faucet-wrapper #faucet-message.error {
+    display: block;
+    color: darkred;
+    background-color: mistyrose;
 }
 
 .labels-wrapper ul {

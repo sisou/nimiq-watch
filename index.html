@@ -156,6 +156,7 @@
                         <a href="https://nimiq.watch/news/2017-12-23-week-in-review-5.html" target="_blank">23 Dec 2017 | Week In Review #5</a>
                     </div>
                 </div>-->
+                <a href="#faucet" onclick="_linkClicked(this, true);" id="faucet">Faucet</a>
                 <a href="#about" onclick="_linkClicked(this, true);" id="about">What is this?</a>
             </nav>
 
@@ -569,6 +570,20 @@
         </div>
         <div class="blocklist-cell hide-xs">
             {%=_formatSize(o.size)%}
+        </div>
+    </script>
+
+    <script type="text/x-tmpl" id="template-faucet">
+        <div class="faucet-wrapper">
+            <h2>Testnet Faucet</h2>
+            <p>
+                Receive testNIM:
+            </p>
+            <p id="faucet-message"></p>
+            <form id="faucet-form">
+                <input type="text" id="faucet-address" name="address" placeholder="Enter your address" required>
+                <input type="submit" value="Get testNIM">
+            </form>
         </div>
     </script>
 
