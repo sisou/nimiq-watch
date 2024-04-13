@@ -10,6 +10,7 @@ var template = {
     accountInfo:               tmpl('template-account-info'),
     accountTransaction:        tmpl('template-account-transaction'),
     accountBlock:              tmpl('template-account-block'),
+    validatorRegistrations:    tmpl('template-validator-registrations'),
     faucet:                    tmpl('template-faucet'),
     about:                     tmpl('template-about'),
     charts:                    tmpl('template-charts'),
@@ -21,7 +22,7 @@ var $infobox        = document.getElementById('infobox'),
     $status         = document.getElementById('status'),
     $height         = document.getElementById('height');
 
-var directNavigationTargets = ['#about', '#charts', '#labels', '#faucet'];
+var directNavigationTargets = ['#about', '#charts', '#labels', '#faucet', '#validator-registrations'];
 
 var default_colors = ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'];
 default_colors = default_colors.concat(default_colors, default_colors);
@@ -577,6 +578,18 @@ function _onHashChange(e) {
         $searchInput.value = "";
         value === "search" && $searchInput.focus();
         window.scrollTo(0, 0);
+    }
+    else if(value === "validator-registrations") {
+        fetch('https://nimiq-watch-v2.pages.dev/api/v2/preregistrations').then(function(response) {
+            if (!response.ok) {
+                alert('Error: ' + response.status + ' ' + response.statusText);
+                return;
+            }
+            response.json().then(function(validators) {
+                $infobox.innerHTML = template.validatorRegistrations({ validators });
+                window.scrollTo(0, $infobox.offsetTop - 100);
+            });
+        });
     }
     else if(value === "faucet") {
         $infobox.innerHTML = template.faucet();
