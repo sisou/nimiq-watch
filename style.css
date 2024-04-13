@@ -902,7 +902,8 @@ footer a {
     }
 }
 
-.show-mobile {
+.show-mobile,
+.show-mobile-block {
     display: none;
 }
 
@@ -917,6 +918,10 @@ footer a {
 
     .show-mobile {
         display: initial !important;
+    }
+
+    .show-mobile-block {
+        display: block !important;
     }
 
     header nav > a,
