@@ -614,6 +614,45 @@
         </div>
     </script>
 
+    <script type="text/x-tmpl" id="template-validator-registration">
+        <summary>Validator Registration</summary>
+        <div class="blockinfo-body-row">
+            <label>Deposit</label>
+            {% if (o.deposit_transaction) { %}
+                <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.deposit_transaction.value))%} NIM</span>
+            {% } else { %}
+                <span>-</span>
+            {% } %}
+        </div>
+        <div class="blockinfo-body-row">
+            <label>Signing Key</label>
+            {% if (o.transaction_01) { %}
+                <hash class="blockinfo-extra-data">{%=o.transaction_01.recipient_data.substring(24, 88)%}</hash>
+            {% } else { %}
+                <span>-</span>
+            {% } %}
+        </div>
+        <div class="blockinfo-body-row">
+            <label>Voting Key</label>
+            {% if (o.transaction_02
+                && o.transaction_03
+                && o.transaction_04
+                && o.transaction_05
+                && o.transaction_06
+                ) { %}
+                <hash class="blockinfo-extra-data">
+                    {%=o.transaction_02.recipient_data.substring(14)
+                    %}{%=o.transaction_03.recipient_data.substring(14)
+                    %}{%=o.transaction_04.recipient_data.substring(14)
+                    %}{%=o.transaction_05.recipient_data.substring(14)
+                    %}{%=o.transaction_06.recipient_data.substring(14)%}
+                </hash>
+            {% } else { %}
+                <span>-</span>
+            {% } %}
+        </div>
+    </script>
+
     <script type="text/x-tmpl" id="template-faucet">
         <div class="faucet-wrapper">
             <h2>Testnet Faucet</h2>
