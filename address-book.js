@@ -420,5 +420,5 @@ AddressBook.BOOK = {
     // Albatross Testnet
     'NQ65 DHN8 4BSR 5YSX FC3V BB5J GKM2 GB2L H17C': 'AceStaking',
     'NQ57 M1NT JRQA FGD2 HX1P FN2G 611P JNAE K7HN': 'Mint Pool',
-    'NQ62 F6HC M67U 11XS D3RF T6DL HE5J 7NKK S2GV': 'Helvetia Staking',
+    'NQ49 E4LQ FN9M B9BP 0FRE BCL5 MHFY TGQE D4XX': 'Helvetia Staking',
 }
