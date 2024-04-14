@@ -416,4 +416,9 @@ AddressBook.BOOK = {
     'NQ62 G15X CPF5 XCDU JKMB N3JX KTPP C038 6PV5': 'Fastspot (Testnet)',
     'NQ12 0XL5 5KUC 7LAM NUNA 59BV XE4K 6SDT 5E0A': 'ROYAL NIM CASINO (Testnet)',
     'NQ60 29BE CJUY U9PA GNNE RTXC HF6K C8D3 K36L': 'Nimiq Lottery (Testnet)',
+
+    // Albatross Testnet
+    'NQ65 DHN8 4BSR 5YSX FC3V BB5J GKM2 GB2L H17C': 'AceStaking',
+    'NQ57 M1NT JRQA FGD2 HX1P FN2G 611P JNAE K7HN': 'Mint Pool',
+    'NQ62 F6HC M67U 11XS D3RF T6DL HE5J 7NKK S2GV': 'Helvetia Staking',
 }
