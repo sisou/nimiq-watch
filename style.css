@@ -877,11 +877,13 @@ a.blocklist-cell:focus::after {
     display: flex;
     align-items: center;
     gap: 16px;
-
-    border: 1px solid #D9DEE4;
     padding: 8px 12px;
     border-radius: 5px;
     background: #F0F0F0;
+}
+
+.validators .validator-row + .validator-row {
+    margin-top: 0.5em;
 }
 
 .validators .validator-row .iqon {
