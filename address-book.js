@@ -421,4 +421,18 @@ AddressBook.BOOK = {
     'NQ65 DHN8 4BSR 5YSX FC3V BB5J GKM2 GB2L H17C': 'AceStaking',
     'NQ57 M1NT JRQA FGD2 HX1P FN2G 611P JNAE K7HN': 'Mint Pool',
     'NQ49 E4LQ FN9M B9BP 0FRE BCL5 MHFY TGQE D4XX': 'Helvetia Staking',
+
+    // Stefan's registration test cases
+    'NQ37 RD52 GEGP EKP8 9QLK VYR7 MXHN TGMK SX6T': 'Registration test case 01 (invalid, too early)',
+    'NQ63 M9XQ LMA4 VAR9 Y6EU XMTG 2UL1 CLJ0 R6CP': 'Registration test case 02 (invalid, too late)',
+    'NQ97 8HC8 8FQN 3YDT L8P7 474U FVTY AF08 EM6J': 'Registration test case 03 (valid, registered but inactive)',
+    'NQ96 J7BN TAM7 9EUP 36G4 TFDP CLGV CQC6 2EBD': 'Registration test case 04 (invalid, all 0x01)',
+    'NQ15 DH1N 600D 7LYX JN2Q 0TDJ PC0S BRML BNHK': 'Registration test case 05 (invalid, all 0x06)',
+    'NQ88 0394 HKAL BQ35 9MP8 3M5K 42X8 6FQS 7FJT': 'Registration test case 06 (invalid, wrong numbering)',
+    'NQ40 CYYS A28U XQNT 8EEQ HLPY PA8J 1DNK QCQR': 'Registration test case 07 (invalid, missing last txs)',
+    'NQ52 X3TU CMBQ 0RXA 04LT UM7U U8GB 0TEB PXQM': 'Registration test case 08 (invalid, missing first txs)',
+    'NQ28 G7KH RJSE NKG1 555C D3A8 J8L2 Y4FF UYRT': 'Registration test case 09 (valid, registered twice)',
+    'NQ54 P5X1 UUJ5 3R8U PMS6 Y7U4 CVNS 1DGH YNFS': 'Registration test case 10 (valid, registered twice)',
+    'NQ41 0EVH FAL8 ANE5 6D7R 2503 KR9T GL4V EVUR': 'Registration test case 11 (invalid, no deposit)',
+    'NQ09 5J2R 4ET7 HK8X X8XX SB0F 86C2 E45A 09SJ': 'Registration test case 11 (invalid, deposit too low)',
 }
