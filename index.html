@@ -679,6 +679,23 @@
         {% } %}
     </script>
 
+    <script type="text/x-tmpl" id="template-staker-delegation">
+        <summary>Delegation</summary>
+        <div class="validator-row">
+            <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.delegation.replace(/ /g, '+')%}">
+            <div class="validator-data">
+                <hash>
+                    <a href="#{%=o.delegation.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
+                        {%=_labelAddress(o.delegation)%}
+                    </a>
+                </hash>
+                <span>
+                    {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stake))%} NIM
+                </span>
+            </div>
+        </div>
+    </script>
+
     <script type="text/x-tmpl" id="template-faucet">
         <div class="faucet-wrapper">
             <h2>Testnet Faucet</h2>

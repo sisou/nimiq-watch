@@ -911,36 +911,40 @@ a.blocklist-cell:focus::after {
     width: fit-content;
 }
 
-.validators .validator-row {
+.validator-row {
     display: flex;
     align-items: center;
     gap: 16px;
+}
+
+.validators .validator-row {
     padding: 8px 12px;
     border-radius: 5px;
     background: #F0F0F0;
 }
 
-.validators .validator-row + .validator-row {
+.validator-row + .validator-row {
     margin-top: 0.5em;
 }
 
-.validators .validator-row .iqon {
+.validator-row .iqon {
     width: 60px;
     height: 60px !important;
 }
 
-.validators .validator-row .validator-data hash {
+.validator-row .validator-data hash {
     display: block;
     margin: 6px 0 4px;
 }
 
-.validators .validator-row .validator-data span {
+.validator-row .validator-data span {
     font-size: 16px;
     color: #666;
 }
 
 details.validator,
-details.stakers {
+details.stakers,
+details.delegation {
     cursor: pointer;
     margin-bottom: 8px;
 }
@@ -949,7 +953,8 @@ details.stakers {
     padding: 2px 0 2px 19px;
 }
 
-.stakers .staker-row {
+.stakers .staker-row,
+.delegation .validator-row {
     margin-top: 0.5em;
 }
 

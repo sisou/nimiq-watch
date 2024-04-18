@@ -13,6 +13,7 @@ var template = {
     validatorRegistrations:    tmpl('template-validator-registrations'),
     validatorRegistration:     tmpl('template-validator-registration'),
     validatorStakers:          tmpl('template-validator-stakers'),
+    stakerDelegation:          tmpl('template-staker-delegation'),
     faucet:                    tmpl('template-faucet'),
     about:                     tmpl('template-about'),
     charts:                    tmpl('template-charts'),
@@ -648,6 +649,22 @@ function _onHashChange(e) {
 
                     var $accountBasics = $infobox.getElementsByClassName('account-basics')[0];
                     if ($accountBasics) {
+                        fetch(`https://nimiq-watch-v2.pages.dev/api/v2/prestaking/${accountInfo.address.replace(/ /g, '+')}`)
+                        .then(function(response) {
+                            if (response.status === 404) {
+                                return;
+                            }
+                            if (!response.ok) {
+                                console.error('Error fetching prestake:', response);
+                            }
+                            response.json().then(function(data) {
+                                const $delegation = document.createElement('details');
+                                $delegation.classList.add('delegation', 'account-basics');
+                                $delegation.innerHTML = template.stakerDelegation(data.prestake);
+                                $accountBasics.parentElement.insertBefore($delegation, $accountBasics.nextSibling);
+                            });
+                        });
+
                         fetch(`https://nimiq-watch-v2.pages.dev/api/v2/preregistration/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
@@ -663,7 +680,7 @@ function _onHashChange(e) {
                                 $accountBasics.parentElement.insertBefore($validator, $accountBasics.nextSibling);
 
                                 const $stakers = document.createElement('details');
-                                $stakers.setAttribute('open', 'open');
+                                // $stakers.setAttribute('open', 'open');
                                 $stakers.classList.add('stakers', 'account-basics');
                                 $stakers.innerHTML = template.validatorStakers({
                                     deposit: data.registration.deposit_transaction.value,
