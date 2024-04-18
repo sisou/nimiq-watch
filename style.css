@@ -939,12 +939,28 @@ a.blocklist-cell:focus::after {
     color: #666;
 }
 
-details.validator {
+details.validator,
+details.stakers {
     cursor: pointer;
+    margin-bottom: 8px;
 }
 
-details.validator summary {
-    margin-bottom: 8px;
+.stakers .staker-row {
+    padding: 2px 0 2px 19px;
+}
+
+.stakers .staker-row {
+    margin-top: 0.5em;
+}
+
+.stakers .staker-row hash {
+    display: block;
+    margin: 6px 0 4px;
+}
+
+.stakers .staker-row span {
+    font-size: 16px;
+    color: #666;
 }
 
 @keyframes sk-rotateplane {
