@@ -343,7 +343,7 @@ hash {
 #infobox .txinfo-wrapper > h3 {
     margin-bottom: 0.5em;
     color: #042146;
-    font-size: 1.2em;;
+    font-size: 1.2em;
     font-weight: normal;
 }
 
@@ -988,12 +988,16 @@ details.delegation {
 
 footer {
     text-align: center;
-    font-size: 0.8em;;
+    font-size: 0.8em;
     color: #AAA;
     padding: 1em;
 }
 footer a {
     color: #888;
+}
+
+.strikethrough {
+    text-decoration: line-through;
 }
 
 @media (max-width: 960px) {

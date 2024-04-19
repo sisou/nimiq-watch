@@ -654,7 +654,7 @@
     </script>
 
     <script type="text/x-tmpl" id="template-validator-stakers">
-        <summary>Stake: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers.reduce((sum, staker) => sum + staker.stake, 0) + o.deposit))%} NIM</summary>
+        <summary>Stake: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers.reduce((sum, staker) => staker.stake >= 100e5 ? sum + staker.stake : sum, 0) + o.deposit))%} NIM</summary>
 
         <div class="staker-row">
             <hash>Deposit</hash>
@@ -663,7 +663,7 @@
 
         {% if(o.stakers.length) { %}
             {% for(var i = 0; i < o.stakers.length; i++) { %}
-                <div class="staker-row">
+                <div class="staker-row{% if (o.stakers[i].stake < 100e5) { %} strikethrough{% } %}">
                     <hash>
                         <a href="#{%=o.stakers[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
                             {%=_labelAddress(o.stakers[i].address)%}
@@ -689,7 +689,7 @@
                         {%=_labelAddress(o.delegation)%}
                     </a>
                 </hash>
-                <span>
+                <span{% if (o.stake < 100e5) { %} class="strikethrough"{% } %}>
                     {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stake))%} NIM
                 </span>
             </div>
