@@ -583,7 +583,7 @@ function _onHashChange(e) {
         window.scrollTo(0, 0);
     }
     else if(value === "validator-registrations") {
-        fetch('https://nimiq-watch-v2.pages.dev/api/v2/registrations').then(function(response) {
+        fetch('https://nimiq-watch-v2-testnet.nuxt.dev/api/v2/registrations').then(function(response) {
             if (!response.ok) {
                 alert('Error: ' + response.status + ' ' + response.statusText);
                 return;
@@ -649,7 +649,7 @@ function _onHashChange(e) {
 
                     var $accountBasics = $infobox.getElementsByClassName('account-basics')[0];
                     if ($accountBasics) {
-                        fetch(`https://nimiq-watch-v2.pages.dev/api/v2/prestaking/${accountInfo.address.replace(/ /g, '+')}`)
+                        fetch(`https://nimiq-watch-v2-testnet.nuxt.dev/api/v2/prestaking/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
                                 return;
@@ -665,7 +665,7 @@ function _onHashChange(e) {
                             });
                         });
 
-                        fetch(`https://nimiq-watch-v2.pages.dev/api/v2/registration/${accountInfo.address.replace(/ /g, '+')}`)
+                        fetch(`https://nimiq-watch-v2-testnet.nuxt.dev/api/v2/registration/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
                                 return;
