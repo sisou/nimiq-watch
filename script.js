@@ -218,7 +218,7 @@ function _getAccountInfo(address, callback) {
     address = address.replace(/ /g, '+');
     fetch(apiUrl + '/account/' + address).then(function(response) {
         response.json().then(function(data) {
-            if(data.error) alert('Error: ' + data.error);
+            if(data.message) alert('Error: ' + data.message);
             if(!data) alert('No data received from https://api.nimiq.watch/account/' + address + '!');
 
             if(data.type === 1) { // Vesting
@@ -430,9 +430,9 @@ function _getBlockInfo(identifier, callback, errback) {
         }
 
         response.json().then(function(data) {
-            if(data.error) {
+            if(data.message) {
                 if(errback) errback(data);
-                else if(data.error !== 'Block not found') alert('Error: ' + data.error);
+                else if(data.message !== 'Block not found') alert('Error: ' + data.message);
             }
             if(!data) {
                 if(errback) errback(null);
@@ -471,7 +471,7 @@ function _getTransactionInfo(identifier, callback) {
     identifier = encodeURIComponent(identifier);
     fetch(apiUrl + '/transaction/' + identifier).then(function(response) {
         response.json().then(function(data) {
-            if(data.error && data.error !== 'Transaction not found') alert('Error: ' + data.error);
+            if(data.message && data.message !== 'Transaction not found') alert('Error: ' + data.message);
             if(!data) alert('No data received from https://api.nimiq.watch/transaction/' + identifier + '!');
             callback(data);
         });
@@ -541,7 +541,7 @@ function _buildListOfLatestBlocks(self) {
 var blocklistNode = document.getElementById('blocklist');
 
 function _addBlockToListOfLatestBlocks(blockInfo, append) {
-    if(!blockInfo || blockInfo.error) return;
+    if(!blockInfo || blockInfo.message) return;
 
     var item = document.createElement('div');
     item.classList.add('blocklist-block');
@@ -628,7 +628,7 @@ function _onHashChange(e) {
         switch(format) {
             case "Account Address":
                 _getAccountInfo(value, function(accountInfo) {
-                    if(accountInfo.error) return;
+                    if(accountInfo.message) return;
 
                     accountInfo.accountTransaction = template.accountTransaction;
                     accountInfo.accountBlock       = template.accountBlock;
@@ -689,9 +689,9 @@ function _onHashChange(e) {
             case "Tx or Block Hash":
                 value = Nimiq.BufferUtils.toBase64(Nimiq.BufferUtils.fromHex(value));
                 _getTransactionInfo(value, function(txInfo) {
-                    if(!txInfo || txInfo.error) {
+                    if(!txInfo || txInfo.message) {
                         _getBlockInfo(value, function(blockInfo) {
-                            if(!blockInfo || blockInfo.error) {
+                            if(!blockInfo || blockInfo.message) {
                                 alert("That transaction or block hash cannot be found.");
                                 return;
                             }
@@ -708,7 +708,7 @@ function _onHashChange(e) {
                 break;
             case "Block Number":
                 _getBlockInfo(value, function(blockInfo) {
-                    if(!blockInfo || blockInfo.error) {
+                    if(!blockInfo || blockInfo.message) {
                         alert("That block number cannot be found.");
                         return;
                     }
