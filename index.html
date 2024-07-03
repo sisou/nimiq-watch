@@ -36,11 +36,9 @@
 
         var useTestnet = location.hostname !== 'nimiq.watch';
 
-        var legacyApiUrl = 'https://api.nimiq.watch';
         var apiUrl = 'https://api.nimiq.watch';
         var wsUrl = 'wss://api.nimiq.watch';
         if (useTestnet) {
-            legacyApiUrl = 'https://test-api.nimiq.watch';
             apiUrl = 'https://v2.test.nimiqwatch.com/api/v1';
             wsUrl = 'wss://test-api.nimiq.watch';
         }
@@ -374,7 +372,7 @@
         <div class="accountinfo-wrapper">
             <h2>Account Info</h2>
             <div class="blockinfo-header">
-                <img class="iqon" src="{%=legacyApiUrl%}/iqon/{%=o.address.replace(/ /g, '+')%}">
+                <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.address.replace(/ /g, '+')%}">
                 <div class="hash">
                     <h3>Address</h3>
                     <hash>{%=o.address%}</hash>
@@ -584,7 +582,7 @@
             {% if(o.validators.length) { %}
                 {% for(var i = 0; i < o.validators.length; i++) { %}
                     <div class="validator-row">
-                        <img class="iqon" src="{%=legacyApiUrl%}/iqon/{%=o.validators[i].address.replace(/ /g, '+')%}">
+                        <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.validators[i].address.replace(/ /g, '+')%}">
                         <div class="validator-data">
                             <hash>
                                 <a href="#{%=o.validators[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
@@ -684,7 +682,7 @@
     <script type="text/x-tmpl" id="template-staker-delegation">
         <summary>Delegation</summary>
         <div class="validator-row">
-            <img class="iqon" src="{%=legacyApiUrl%}/iqon/{%=o.delegation.replace(/ /g, '+')%}">
+            <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.delegation.replace(/ /g, '+')%}">
             <div class="validator-data">
                 <hash>
                     <a href="#{%=o.delegation.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
@@ -755,7 +753,7 @@
                         || (!useTestnet && !o[address].toLowerCase().includes('testnet'))
                     ) %}
                     <li>
-                        <img class="iqon" src="{%=legacyApiUrl%}/iqon/{%=address.replace(/ /g, '+')%}" loading="lazy">
+                        <img class="iqon" src="{%=apiUrl%}/iqon/{%=address.replace(/ /g, '+')%}" loading="lazy">
                         <a href="#{%=address%}">{%=o[address]%}</a>
                     </li>
                 {% } %}
