@@ -37,10 +37,8 @@
         var useTestnet = location.hostname !== 'nimiq.watch';
 
         var apiUrl = 'https://api.nimiq.watch';
-        var wsUrl = 'wss://api.nimiq.watch';
         if (useTestnet) {
             apiUrl = 'https://v2.test.nimiqwatch.com/api/v1';
-            wsUrl = 'wss://test-api.nimiq.watch';
         }
 
         // Dummy object to prevent JS errors
@@ -91,7 +89,7 @@
         var ws;
         function connectWS() {
             // Set up websocket connection
-            ws = new WebSocket(wsUrl + '/live');
+            ws = new WebSocket(apiUrl + '/live');
             ws.onopen = function() {
                 _onConsensusEstablished();
             };
