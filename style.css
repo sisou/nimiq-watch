@@ -868,6 +868,37 @@ a.blocklist-cell:focus::after {
     margin-bottom: 0;
 }
 
+.validators {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.validators .validator-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    border: 1px solid #D9DEE4;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background: #F0F0F0;
+}
+
+.validators .validator-row .iqon {
+    width: 60px;
+    height: 60px !important;
+}
+
+.validators .validator-row .validator-data hash {
+    display: block;
+    margin: 6px 0 4px;
+}
+
+.validators .validator-row .validator-data span {
+    font-size: 16px;
+    color: #666;
+}
+
 @keyframes sk-rotateplane {
     0%   { transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
     25%  { transform: perspective(120px) rotateX(-180deg) rotateY(0deg); }

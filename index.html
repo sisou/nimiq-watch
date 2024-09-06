@@ -132,9 +132,11 @@
 
                     <div class="submenu">
                         <a href="#labels" onclick="_linkClicked(this);">Address Labels</a>
+                        <a href="#validator-registrations" onclick="_linkClicked(this);">Validator Registrations</a>
                     </div>
                 </div>
                 <a href="#labels" onclick="_linkClicked(this, true);" class="show-mobile-block">Address Labels</a>
+                <a href="#validator-registrations" onclick="_linkClicked(this, true);" class="show-mobile-block">Validator Registrations</a>
                 <div class="submenu-container">
                     <a href="#charts" onclick="_linkClicked(this, true);" id="charts">Charts</a>
 
@@ -569,6 +571,44 @@
         </div>
         <div class="blocklist-cell hide-xs">
             {%=_formatSize(o.size)%}
+        </div>
+    </script>
+
+    <script type="text/x-tmpl" id="template-validator-registrations">
+        <div class="validators">
+            <h2>Validator Registrations</h2>
+            {% if(o.validators.length) { %}
+                {% for(var i = 0; i < o.validators.length; i++) { %}
+                    <div class="validator-row">
+                        <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.validators[i].address.replace(/ /g, '+')%}">
+                        <div class="validator-data">
+                            <hash>
+                                <a href="#{%=o.validators[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
+                                    {%=_labelAddress(o.validators[i].address)%}
+                                </a>
+                            </hash>
+                            <span>
+                                Registration: {%
+                                    if(o.validators[i].transaction_01
+                                    && o.validators[i].transaction_02
+                                    && o.validators[i].transaction_03
+                                    && o.validators[i].transaction_04
+                                    && o.validators[i].transaction_05
+                                    && o.validators[i].transaction_06
+                                    ) print('✅'); else print('❌');
+                                %}
+                            </span>
+                            <span>|</span>
+                            <span>
+                                Deposit: {% if(o.validators[i].deposit_transaction) print('✅'); else print('❌'); %}
+                            </span>
+                        </div>
+
+                    </div>
+                {% } %}
+            {% } else { %}
+                <div class="no-more">No validators registered</div>
+            {% } %}
         </div>
     </script>
 
