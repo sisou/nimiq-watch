@@ -11,6 +11,7 @@ var template = {
     accountTransaction:        tmpl('template-account-transaction'),
     accountBlock:              tmpl('template-account-block'),
     validatorRegistrations:    tmpl('template-validator-registrations'),
+    validatorRegistration:     tmpl('template-validator-registration'),
     about:                     tmpl('template-about'),
     charts:                    tmpl('template-charts'),
     labels:                    tmpl('template-labels'),
@@ -636,6 +637,25 @@ function _onHashChange(e) {
                     var $loader = $infobox.getElementsByClassName('transaction-loader')[0];
                     if ($loader) {
                         loadMoreTransactions($loader, accountInfo.address);
+                    }
+
+                    var $accountBasics = $infobox.getElementsByClassName('account-basics')[0];
+                    if ($accountBasics) {
+                        fetch(`https://v2.nimiqwatch.com/api/v2/registration/${accountInfo.address.replace(/ /g, '+')}`)
+                        .then(function(response) {
+                            if (response.status === 404) {
+                                return;
+                            }
+                            if (!response.ok) {
+                                console.error('Error fetching validator registration:', response);
+                            }
+                            response.json().then(function(data) {
+                                const $validator = document.createElement('details');
+                                $validator.classList.add('validator', 'account-basics');
+                                $validator.innerHTML = template.validatorRegistration(data);
+                                $accountBasics.parentElement.insertBefore($validator, $accountBasics.nextSibling);
+                            });
+                        });
                     }
                 });
                 break;
