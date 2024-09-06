@@ -651,6 +651,32 @@
         </div>
     </script>
 
+    <script type="text/x-tmpl" id="template-validator-stakers">
+        <summary>Stake: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers.reduce((sum, staker) => sum + staker.stake, 0) + o.deposit))%} NIM</summary>
+
+        <div class="staker-row">
+            <hash>Deposit</hash>
+            <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.deposit))%} NIM</span>
+        </div>
+
+        {% if(o.stakers.length) { %}
+            {% for(var i = 0; i < o.stakers.length; i++) { %}
+                <div class="staker-row">
+                    <hash>
+                        <a href="#{%=o.stakers[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
+                            {%=_labelAddress(o.stakers[i].address)%}
+                        </a>
+                    </hash>
+                    <span>
+                        {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers[i].stake))%} NIM
+                    </span>
+                </div>
+            {% } %}
+        {% } else { %}
+            <div class="no-more">No stakers delegated</div>
+        {% } %}
+    </script>
+
     <script type="text/x-tmpl" id="template-about">
         <div class="about-wrapper">
             <h2>What is this?</h2>

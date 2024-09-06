@@ -12,6 +12,7 @@ var template = {
     accountBlock:              tmpl('template-account-block'),
     validatorRegistrations:    tmpl('template-validator-registrations'),
     validatorRegistration:     tmpl('template-validator-registration'),
+    validatorStakers:          tmpl('template-validator-stakers'),
     about:                     tmpl('template-about'),
     charts:                    tmpl('template-charts'),
     labels:                    tmpl('template-labels'),
@@ -652,8 +653,17 @@ function _onHashChange(e) {
                             response.json().then(function(data) {
                                 const $validator = document.createElement('details');
                                 $validator.classList.add('validator', 'account-basics');
-                                $validator.innerHTML = template.validatorRegistration(data);
+                                $validator.innerHTML = template.validatorRegistration(data.registration);
                                 $accountBasics.parentElement.insertBefore($validator, $accountBasics.nextSibling);
+
+                                const $stakers = document.createElement('details');
+                                $stakers.setAttribute('open', 'open');
+                                $stakers.classList.add('stakers', 'account-basics');
+                                $stakers.innerHTML = template.validatorStakers({
+                                    deposit: data.registration.deposit_transaction.value,
+                                    stakers: data.stakers,
+                                });
+                                $accountBasics.parentElement.insertBefore($stakers, $validator.nextSibling);
                             });
                         });
                     }
