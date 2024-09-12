@@ -408,6 +408,11 @@ AddressBook.BOOK = {
     // '': '',
     // '': '',
 
+    // Validator registrations
+    // '': 'AceStaking',
+    // '': 'Mint Pool',
+    'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': 'Helvetia Staking',
+
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
     'NQ36 P00L 1N6T S3QL KJY8 6FH4 5XN4 DXY0 L7C8': 'NIMIQ.WATCH Testnet-Pool',
