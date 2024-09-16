@@ -597,6 +597,18 @@ function _onHashChange(e) {
                 return;
             }
             response.json().then(function(validators) {
+                validators.sort((a, b) => {
+                    var registrationAComplete = a.transaction_01 && a.transaction_02 && a.transaction_03 && a.transaction_04 && a.transaction_05 && a.transaction_06;
+                    var registrationBComplete = b.transaction_01 && b.transaction_02 && b.transaction_03 && b.transaction_04 && b.transaction_05 && b.transaction_06;
+
+                    if (registrationAComplete && !registrationBComplete) return -1;
+                    if (!registrationAComplete && registrationBComplete) return 1;
+
+                    if (a.deposit_transaction && !b.deposit_transaction) return -1;
+                    if (!a.deposit_transaction && b.deposit_transaction) return 1;
+
+                    return 0;
+                });
                 $infobox.innerHTML = template.validatorRegistrations({ validators });
                 window.scrollTo(0, $infobox.offsetTop - 100);
             });
