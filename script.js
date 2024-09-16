@@ -214,6 +214,15 @@ function _labelAddress(address, shorten) {
     else             return address;
 }
 
+function _addressIcon(address) {
+    var iconPath = AddressBook.getIconPath(address);
+    if (iconPath) {
+        return publicUrl + iconPath;
+    }
+
+    return apiUrl + '/iqon/' + address.replace(/ /g, '+');
+}
+
 function _getAccountInfo(address, callback) {
     address = address.replace(/ /g, '+');
     fetch(apiUrl + '/account/' + address).then(function(response) {

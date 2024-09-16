@@ -1,9 +1,20 @@
 // Address book (https://github.com/nimiq/nimiq-utils/blob/master/address-book/address-book.js)
 
 var AddressBook = {
+    /**
+     * @param {string} address
+     * @returns {string?}
+     */
     getLabel: function(address) {
         return AddressBook.BOOK[address] || null;
-    }
+    },
+    /**
+     * @param {string} address
+     * @returns {string?}
+     */
+    getIconPath: function(address) {
+        return AddressBook.ICONS[address] || null;
+    },
 }
 
 AddressBook.BOOK = {
@@ -423,4 +434,9 @@ AddressBook.BOOK = {
     'NQ17 D2ES UBTP N14D RG4E 2KBK 217A 2GH2 NNY1': 'Fastspot (Testnet)',
     'NQ12 0XL5 5KUC 7LAM NUNA 59BV XE4K 6SDT 5E0A': 'ROYAL NIM CASINO (Testnet)',
     'NQ60 29BE CJUY U9PA GNNE RTXC HF6K C8D3 K36L': 'Nimiq Lottery (Testnet)',
+}
+
+AddressBook.ICONS = {
+    'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': '/pools/mainnet/helvetiastaking.svg',
+    'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': '/pools/mainnet/mintpool.svg',
 }
