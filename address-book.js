@@ -425,6 +425,7 @@ AddressBook.BOOK = {
     'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': 'Helvetia Staking',
     'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': 'Mint Pool',
     'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': 'nim.re',
+    'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': 'Siam Pool',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -441,4 +442,5 @@ AddressBook.BOOK = {
 AddressBook.ICONS = {
     'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': '/pools/mainnet/helvetiastaking.svg',
     'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': '/pools/mainnet/mintpool.svg',
+    'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': '/pools/mainnet/siampool.png',
 }
