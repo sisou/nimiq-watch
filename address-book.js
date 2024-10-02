@@ -398,6 +398,7 @@ AddressBook.BOOK = {
     'NQ65 C2PJ MF8T 9RER KE4L PXL7 CE06 87KE K91V': '@King',
     'NQ20 7P7U KYCC C1LB QCMV NS22 F21X GFY7 YCAV': '@Ahmad',
     'NQ93 1H6D TS5R YSX9 GFCP DPY7 X3N9 BBVX C1PP': '@Ghocha_Baladewa',
+    'NQ49 5DFS B4LH 0TTL BUT4 TBVR E7C2 DL3R 7L4D': '@abdou',
     // '': '@',
 
     // Exchanges
