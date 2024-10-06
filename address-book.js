@@ -426,7 +426,7 @@ AddressBook.BOOK = {
     'NQ97 H1NR S3X0 CVFQ VJ9Y 9A0Y FRQN Q6EU D0PL': 'AceStaking',
     'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': 'Helvetia Staking',
     'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': 'Mint Pool',
-    'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': 'nim.re',
+    'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': 'nim.re Staking Pool',
     'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': 'Siam Pool',
     'NQ05 U1RF QJNH JCS1 RDQX 4M3Y 60KR K6CN 5LKC': 'NimiqHub Staking',
 
@@ -447,4 +447,5 @@ AddressBook.ICONS = {
     'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': '/pools/mainnet/mintpool.svg',
     'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': '/pools/mainnet/siampool.svg',
     'NQ05 U1RF QJNH JCS1 RDQX 4M3Y 60KR K6CN 5LKC': '/pools/mainnet/nimiqhubstaking.png',
+    'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': '/pools/mainnet/nimrestakingpool.png',
 }
