@@ -430,6 +430,7 @@ AddressBook.BOOK = {
     'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': 'Siam Pool',
     'NQ05 U1RF QJNH JCS1 RDQX 4M3Y 60KR K6CN 5LKC': 'NimiqHub Staking',
     'NQ96 X97C 94M1 6MV3 KJ0G JA5U 6VB4 6Y63 EUH4': 'Keyring Staking',
+    'NQ98 D3KE 8EQ8 Y7DK G1MT 3P5T 2PHX 18V5 UEC1': 'Moon Pool',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -451,4 +452,5 @@ AddressBook.ICONS = {
     'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': '/pools/mainnet/nimrestakingpool.png',
     'NQ97 H1NR S3X0 CVFQ VJ9Y 9A0Y FRQN Q6EU D0PL': '/pools/mainnet/acestaking.png',
     'NQ96 X97C 94M1 6MV3 KJ0G JA5U 6VB4 6Y63 EUH4': '/pools/mainnet/keyringstaking.png',
+    'NQ98 D3KE 8EQ8 Y7DK G1MT 3P5T 2PHX 18V5 UEC1': '/pools/mainnet/moonpool.png',
 }
