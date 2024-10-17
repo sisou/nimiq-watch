@@ -132,11 +132,11 @@
 
                     <div class="submenu">
                         <a href="#labels" onclick="_linkClicked(this);">Address Labels</a>
-                        <a href="#validator-registrations" onclick="_linkClicked(this);">Validator Registrations</a>
+                        <a href="#pre-staking" onclick="_linkClicked(this);">Pre-Staking</a>
                     </div>
                 </div>
                 <a href="#labels" onclick="_linkClicked(this, true);" class="show-mobile-block">Address Labels</a>
-                <a href="#validator-registrations" onclick="_linkClicked(this, true);" class="show-mobile-block">Validator Registrations</a>
+                <a href="#pre-staking" onclick="_linkClicked(this, true);" class="show-mobile-block">Pre-Staking</a>
                 <div class="submenu-container">
                     <a href="#charts" onclick="_linkClicked(this, true);" id="charts">Charts</a>
 
@@ -574,9 +574,17 @@
         </div>
     </script>
 
-    <script type="text/x-tmpl" id="template-validator-registrations">
+    <script type="text/x-tmpl" id="template-pre-staking">
         <div class="validators">
-            <h2>Validator Registrations</h2>
+            <h2>Pre-Staking</h2>
+            <p>
+                <strong style="font-size: 22px;">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.totalStake), true)%} NIM</strong> are pre-staked to {%=o.validators.length%} validators.
+            </p>
+            {% if (o.totalStake > 0) { %}
+                <p>
+                    Pre-stake with the <a href="https://wallet.nimiq.com">Nimiq Wallet</a> until November 10th!
+                </p>
+            {% } %}
             {% if(o.validators.length) { %}
                 {% for(var i = 0; i < o.validators.length; i++) { %}
                     <div class="validator-row">
@@ -588,19 +596,10 @@
                                 </a>
                             </hash>
                             <span>
-                                Registration: {%
-                                    if(o.validators[i].transaction_01
-                                    && o.validators[i].transaction_02
-                                    && o.validators[i].transaction_03
-                                    && o.validators[i].transaction_04
-                                    && o.validators[i].transaction_05
-                                    && o.validators[i].transaction_06
-                                    ) print('✅'); else print('❌');
-                                %}
+                                {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.validators[i].deposit + o.validators[i].delegatedStake), true)%} NIM
                             </span>
-                            <span>|</span>
                             <span>
-                                Deposit: {% if(o.validators[i].deposit_transaction) print('✅'); else print('❌'); %}
+                                ({%=(Math.round((o.validators[i].deposit + o.validators[i].delegatedStake) / o.totalStake * 10000) / 100)%}%)
                             </span>
                         </div>
 

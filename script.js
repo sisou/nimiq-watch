@@ -10,7 +10,7 @@ var template = {
     accountInfo:               tmpl('template-account-info'),
     accountTransaction:        tmpl('template-account-transaction'),
     accountBlock:              tmpl('template-account-block'),
-    validatorRegistrations:    tmpl('template-validator-registrations'),
+    preStaking:                tmpl('template-pre-staking'),
     validatorRegistration:     tmpl('template-validator-registration'),
     validatorStakers:          tmpl('template-validator-stakers'),
     stakerDelegation:          tmpl('template-staker-delegation'),
@@ -24,7 +24,7 @@ var $infobox        = document.getElementById('infobox'),
     $status         = document.getElementById('status'),
     $height         = document.getElementById('height');
 
-var directNavigationTargets = ['#about', '#charts', '#labels', '#validator-registrations'];
+var directNavigationTargets = ['#about', '#charts', '#labels', '#pre-staking', '#validator-registrations'];
 
 var default_colors = ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'];
 default_colors = default_colors.concat(default_colors, default_colors);
@@ -54,7 +54,7 @@ function _detectHashFormat(value) {
     else return false;
 }
 
-function _formatBalance(value) {
+function _formatBalance(value, noDecimals = false) {
     var valueStr = '';
 
     // If the value has no decimal places below 0.01, display 2 decimals
@@ -66,6 +66,8 @@ function _formatBalance(value) {
 
     var ints = _formatThousands(valueStr.split('.')[0]);
     var decs = valueStr.split('.')[1];
+
+    if (noDecimals) return ints;
 
     return ints + '.' + decs;
 }
@@ -590,26 +592,24 @@ function _onHashChange(e) {
         value === "search" && $searchInput.focus();
         window.scrollTo(0, 0);
     }
-    else if(value === "validator-registrations") {
-        fetch(publicUrl + '/api/v2/registrations').then(function(response) {
+    else if (value === "validator-registrations") {
+        location.hash = "#pre-staking";
+    }
+    else if(value === "pre-staking") {
+        fetch(publicUrl + '/api/v2/validators').then(function(response) {
             if (!response.ok) {
                 alert('Error: ' + response.status + ' ' + response.statusText);
                 return;
             }
             response.json().then(function(validators) {
                 validators.sort((a, b) => {
-                    var registrationAComplete = a.transaction_01 && a.transaction_02 && a.transaction_03 && a.transaction_04 && a.transaction_05 && a.transaction_06;
-                    var registrationBComplete = b.transaction_01 && b.transaction_02 && b.transaction_03 && b.transaction_04 && b.transaction_05 && b.transaction_06;
-
-                    if (registrationAComplete && !registrationBComplete) return -1;
-                    if (!registrationAComplete && registrationBComplete) return 1;
-
-                    if (a.deposit_transaction && !b.deposit_transaction) return -1;
-                    if (!a.deposit_transaction && b.deposit_transaction) return 1;
-
-                    return 0;
+                    // Sort decending
+                    return (b.deposit + b.delegatedStake) - (a.deposit + a.delegatedStake);
                 });
-                $infobox.innerHTML = template.validatorRegistrations({ validators });
+                $infobox.innerHTML = template.preStaking({
+                    validators,
+                    totalStake: validators.reduce((acc, val) => acc + val.deposit + val.delegatedStake, 0),
+                });
                 window.scrollTo(0, $infobox.offsetTop - 100);
             });
         });
