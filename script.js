@@ -699,7 +699,7 @@ function _onHashChange(e) {
                                 $stakers.classList.add('stakers', 'account-basics');
                                 $stakers.innerHTML = template.validatorStakers({
                                     deposit: data.registration.deposit_transaction.value,
-                                    stakers: data.stakers,
+                                    stakers: data.stakers.sort((a, b) => b.stake - a.stake), // Sort descending by stake
                                 });
                                 $accountBasics.parentElement.insertBefore($stakers, $validator.nextSibling);
                             });
