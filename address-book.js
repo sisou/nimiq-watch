@@ -432,6 +432,7 @@ AddressBook.BOOK = {
     'NQ96 X97C 94M1 6MV3 KJ0G JA5U 6VB4 6Y63 EUH4': 'Keyring Staking',
     'NQ98 D3KE 8EQ8 Y7DK G1MT 3P5T 2PHX 18V5 UEC1': 'Moon Pool',
     'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': 'Nova Pool',
+    'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': 'ObsidianStake',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -455,4 +456,5 @@ AddressBook.ICONS = {
     'NQ96 X97C 94M1 6MV3 KJ0G JA5U 6VB4 6Y63 EUH4': '/pools/mainnet/keyringstaking.png',
     'NQ98 D3KE 8EQ8 Y7DK G1MT 3P5T 2PHX 18V5 UEC1': '/pools/mainnet/moonpool.png',
     'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': '/pools/mainnet/novapool.png',
+    'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': '/pools/mainnet/obsidianstake.png',
 }
