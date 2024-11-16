@@ -91,12 +91,15 @@
         function connectWS() {
             // Set up websocket connection
             ws = new WebSocket(apiUrl + '/live');
+            ws.binaryType = 'arraybuffer';
             ws.onopen = function() {
                 _onConsensusEstablished();
             };
             ws.onmessage = function(e) {
                 // console.log(e);
-                var msg = JSON.parse(e.data);
+                let msg;
+                if (typeof e.data === 'string') msg = JSON.parse(e.data);
+                else msg = JSON.parse(new TextDecoder().decode(e.data));
                 if (msg.type !== 'height') return;
                 _onHeadChanged(msg.height);
             };
