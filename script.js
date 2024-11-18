@@ -10,7 +10,7 @@ var template = {
     accountInfo:               tmpl('template-account-info'),
     accountTransaction:        tmpl('template-account-transaction'),
     accountBlock:              tmpl('template-account-block'),
-    validatorRegistrations:    tmpl('template-validator-registrations'),
+    preStaking:                tmpl('template-pre-staking'),
     validatorRegistration:     tmpl('template-validator-registration'),
     validatorStakers:          tmpl('template-validator-stakers'),
     stakerDelegation:          tmpl('template-staker-delegation'),
@@ -25,7 +25,7 @@ var $infobox        = document.getElementById('infobox'),
     $status         = document.getElementById('status'),
     $height         = document.getElementById('height');
 
-var directNavigationTargets = ['#about', '#charts', '#labels', '#faucet', '#validator-registrations'];
+var directNavigationTargets = ['#about', '#charts', '#labels', '#faucet', '#pre-staking', '#validator-registrations'];
 
 var default_colors = ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'];
 default_colors = default_colors.concat(default_colors, default_colors);
@@ -55,7 +55,7 @@ function _detectHashFormat(value) {
     else return false;
 }
 
-function _formatBalance(value) {
+function _formatBalance(value, noDecimals = false) {
     var valueStr = '';
 
     // If the value has no decimal places below 0.01, display 2 decimals
@@ -67,6 +67,8 @@ function _formatBalance(value) {
 
     var ints = _formatThousands(valueStr.split('.')[0]);
     var decs = valueStr.split('.')[1];
+
+    if (noDecimals) return ints;
 
     return ints + '.' + decs;
 }
@@ -213,6 +215,15 @@ function _labelAddress(address, shorten) {
     if(label)        return label;
     else if(shorten) return address.substr(0, 20) + '…';
     else             return address;
+}
+
+function _addressIcon(address) {
+    var iconPath = AddressBook.getIconPath(address);
+    if (iconPath) {
+        return publicUrl + iconPath;
+    }
+
+    return apiUrl + '/iqon/' + address.replace(/ /g, '+');
 }
 
 function _getAccountInfo(address, callback) {
@@ -582,14 +593,24 @@ function _onHashChange(e) {
         value === "search" && $searchInput.focus();
         window.scrollTo(0, 0);
     }
-    else if(value === "validator-registrations") {
-        fetch('https://v2.test.nimiqwatch.com/api/v2/registrations').then(function(response) {
+    else if (value === "validator-registrations") {
+        location.hash = "#pre-staking";
+    }
+    else if(value === "pre-staking") {
+        fetch(publicUrl + '/api/v2/validators').then(function(response) {
             if (!response.ok) {
                 alert('Error: ' + response.status + ' ' + response.statusText);
                 return;
             }
             response.json().then(function(validators) {
-                $infobox.innerHTML = template.validatorRegistrations({ validators });
+                validators.sort((a, b) => {
+                    // Sort decending
+                    return (b.deposit + b.delegatedStake) - (a.deposit + a.delegatedStake);
+                });
+                $infobox.innerHTML = template.preStaking({
+                    validators,
+                    totalStake: validators.reduce((acc, val) => acc + val.deposit + val.delegatedStake, 0),
+                });
                 window.scrollTo(0, $infobox.offsetTop - 100);
             });
         });
@@ -649,7 +670,7 @@ function _onHashChange(e) {
 
                     var $accountBasics = $infobox.getElementsByClassName('account-basics')[0];
                     if ($accountBasics) {
-                        fetch(`https://v2.test.nimiqwatch.com/api/v2/prestaking/${accountInfo.address.replace(/ /g, '+')}`)
+                        fetch(publicUrl + `/api/v2/prestaking/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
                                 return;
@@ -665,7 +686,7 @@ function _onHashChange(e) {
                             });
                         });
 
-                        fetch(`https://v2.test.nimiqwatch.com/api/v2/registration/${accountInfo.address.replace(/ /g, '+')}`)
+                        fetch(publicUrl + `/api/v2/registration/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
                                 return;
@@ -684,7 +705,7 @@ function _onHashChange(e) {
                                 $stakers.classList.add('stakers', 'account-basics');
                                 $stakers.innerHTML = template.validatorStakers({
                                     deposit: data.registration.deposit_transaction.value,
-                                    stakers: data.stakers,
+                                    stakers: data.stakers.sort((a, b) => b.stake - a.stake), // Sort descending by stake
                                 });
                                 $accountBasics.parentElement.insertBefore($stakers, $validator.nextSibling);
                             });

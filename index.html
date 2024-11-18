@@ -36,9 +36,11 @@
 
         var useTestnet = location.hostname !== 'nimiq.watch';
 
-        var apiUrl = 'https://api.nimiq.watch';
+        var apiUrl = 'https://v2.nimiqwatch.com/api/v1';
+        var publicUrl = 'https://v2.nimiqwatch.com';
         if (useTestnet) {
             apiUrl = 'https://v2.test.nimiqwatch.com/api/v1';
+            publicUrl = 'https://v2.test.nimiqwatch.com';
         }
 
         // Dummy object to prevent JS errors
@@ -90,12 +92,15 @@
         function connectWS() {
             // Set up websocket connection
             ws = new WebSocket(apiUrl + '/live');
+            ws.binaryType = 'arraybuffer';
             ws.onopen = function() {
                 _onConsensusEstablished();
             };
             ws.onmessage = function(e) {
                 // console.log(e);
-                var msg = JSON.parse(e.data);
+                let msg;
+                if (typeof e.data === 'string') msg = JSON.parse(e.data);
+                else msg = JSON.parse(new TextDecoder().decode(e.data));
                 if (msg.type !== 'height') return;
                 _onHeadChanged(msg.height);
             };
@@ -131,11 +136,11 @@
 
                     <div class="submenu">
                         <a href="#labels" onclick="_linkClicked(this);">Address Labels</a>
-                        <a href="#validator-registrations" onclick="_linkClicked(this);">Validator Registrations</a>
+                        <a href="#pre-staking" onclick="_linkClicked(this);">Pre-Staking</a>
                     </div>
                 </div>
                 <a href="#labels" onclick="_linkClicked(this, true);" class="show-mobile-block">Address Labels</a>
-                <a href="#validator-registrations" onclick="_linkClicked(this, true);" class="show-mobile-block">Validator Registrations</a>
+                <a href="#pre-staking" onclick="_linkClicked(this, true);" class="show-mobile-block">Pre-Staking</a>
                 <div class="submenu-container">
                     <a href="#charts" onclick="_linkClicked(this, true);" id="charts">Charts</a>
 
@@ -370,7 +375,7 @@
         <div class="accountinfo-wrapper">
             <h2>Account Info</h2>
             <div class="blockinfo-header">
-                <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.address.replace(/ /g, '+')%}">
+                <img class="iqon" src="{%=_addressIcon(o.address)%}">
                 <div class="hash">
                     <h3>Address</h3>
                     <hash>{%=o.address%}</hash>
@@ -574,13 +579,21 @@
         </div>
     </script>
 
-    <script type="text/x-tmpl" id="template-validator-registrations">
+    <script type="text/x-tmpl" id="template-pre-staking">
         <div class="validators">
-            <h2>Validator Registrations</h2>
+            <h2>Pre-Staking</h2>
+            <p>
+                <strong style="font-size: 22px;">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.totalStake), true)%} NIM</strong> are pre-staked to {%=o.validators.length%} validators.
+            </p>
+            {% if (o.totalStake > 0) { %}
+                <p>
+                    Pre-stake with the <a href="https://wallet.nimiq.com">Nimiq Wallet</a> until November 10th!
+                </p>
+            {% } %}
             {% if(o.validators.length) { %}
                 {% for(var i = 0; i < o.validators.length; i++) { %}
                     <div class="validator-row">
-                        <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.validators[i].address.replace(/ /g, '+')%}">
+                        <img class="iqon" src="{%=_addressIcon(o.validators[i].address)%}">
                         <div class="validator-data">
                             <hash>
                                 <a href="#{%=o.validators[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
@@ -588,19 +601,10 @@
                                 </a>
                             </hash>
                             <span>
-                                Registration: {%
-                                    if(o.validators[i].transaction_01
-                                    && o.validators[i].transaction_02
-                                    && o.validators[i].transaction_03
-                                    && o.validators[i].transaction_04
-                                    && o.validators[i].transaction_05
-                                    && o.validators[i].transaction_06
-                                    ) print('✅'); else print('❌');
-                                %}
+                                {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.validators[i].deposit + o.validators[i].delegatedStake), true)%} NIM
                             </span>
-                            <span>|</span>
                             <span>
-                                Deposit: {% if(o.validators[i].deposit_transaction) print('✅'); else print('❌'); %}
+                                ({%=(Math.round((o.validators[i].deposit + o.validators[i].delegatedStake) / o.totalStake * 10000) / 100)%}%)
                             </span>
                         </div>
 
@@ -652,7 +656,7 @@
     </script>
 
     <script type="text/x-tmpl" id="template-validator-stakers">
-        <summary>Stake: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers.reduce((sum, staker) => staker.stake >= 100e5 ? sum + staker.stake : sum, 0) + o.deposit))%} NIM</summary>
+        <summary>Stake: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers.reduce((sum, staker) => sum + staker.stake, 0) + o.deposit))%} NIM</summary>
 
         <div class="staker-row">
             <hash>Deposit</hash>
@@ -661,7 +665,7 @@
 
         {% if(o.stakers.length) { %}
             {% for(var i = 0; i < o.stakers.length; i++) { %}
-                <div class="staker-row{% if (o.stakers[i].stake < 100e5) { %} strikethrough{% } %}">
+                <div class="staker-row">
                     <hash>
                         <a href="#{%=o.stakers[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
                             {%=_labelAddress(o.stakers[i].address)%}
@@ -680,14 +684,14 @@
     <script type="text/x-tmpl" id="template-staker-delegation">
         <summary>Delegation</summary>
         <div class="validator-row">
-            <img class="iqon" src="{%=apiUrl%}/iqon/{%=o.delegation.replace(/ /g, '+')%}">
+            <img class="iqon" src="{%=_addressIcon(o.delegation)%}">
             <div class="validator-data">
                 <hash>
                     <a href="#{%=o.delegation.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
                         {%=_labelAddress(o.delegation)%}
                     </a>
                 </hash>
-                <span{% if (o.stake < 100e5) { %} class="strikethrough"{% } %}>
+                <span>
                     {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stake))%} NIM
                 </span>
             </div>
@@ -751,7 +755,7 @@
                         || (!useTestnet && !o[address].toLowerCase().includes('testnet'))
                     ) %}
                     <li>
-                        <img class="iqon" src="{%=apiUrl%}/iqon/{%=address.replace(/ /g, '+')%}" loading="lazy">
+                        <img class="iqon" src="{%=_addressIcon(address)%}" loading="lazy">
                         <a href="#{%=address%}">{%=o[address]%}</a>
                     </li>
                 {% } %}

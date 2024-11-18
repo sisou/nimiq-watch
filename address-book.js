@@ -1,9 +1,20 @@
 // Address book (https://github.com/nimiq/nimiq-utils/blob/master/address-book/address-book.js)
 
 var AddressBook = {
+    /**
+     * @param {string} address
+     * @returns {string?}
+     */
     getLabel: function(address) {
         return AddressBook.BOOK[address] || null;
-    }
+    },
+    /**
+     * @param {string} address
+     * @returns {string?}
+     */
+    getIconPath: function(address) {
+        return AddressBook.ICONS[address] || null;
+    },
 }
 
 AddressBook.BOOK = {
@@ -53,12 +64,17 @@ AddressBook.BOOK = {
     'NQ13 J666 L991 VVJ4 X3D2 77LL Y9Y9 A615 0YVG': 'das3990x',
     'NQ87 RP5U 72J8 5N5K JUDE HGVU VYHX QM37 23V4': 'Minet',
     'NQ36 M4KK FC8H 8M5A 9BCK LTP1 KEVQ 1XAA C6V5': 'mcpool',
+    'NQ21 YDBK D4LV QCY7 1AC2 N1TA YG3G 7X72 GRL4': 'mcpool',
+    'NQ72 SP61 6SXJ 1K6G 74TV XNB4 ATQP M2KP V657': 'Coinhunters Pool',
+    // 'NQ16 4EG5 0N94 PK1H 2UTA FF3S MX4Q DLFT 0B3P': 'My Nimiq Pool',
     // '': '',
 
     // Mainnet Services
     'NQ15 MLJN 23YB 8FBM 61TN 7LYG 2212 LVBG 4V19': 'NIM Activation',
     'NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF': 'Nimiq Foundation',
-    'NQ19 YG54 46TX EHGQ D2R2 V8XA JX84 UFG0 S0MC': 'Nimiq Charity',
+    'NQ34 NT7S G97J EGA1 C0RM 0JT2 NX5S VL9S JVKR': 'Nimiq Foundation (PoS)',
+    'NQ19 YG54 46TX EHGQ D2R2 V8XA JX84 UFG0 S0MC': 'Nimiq ImpactX Charity',
+    'NQ79 M7SC 8NEM 5NX8 8920 LCK5 3F3A H9PK 2TTT': 'Nimiq ImpactX Charity (PoS)',
     'NQ93 RL4N M68G 9DEN CKU9 HJRE HYRJ CYRE J0XB': 'nimiqfaucet.io',
     'NQ94 GSXP KNG0 K5YV HFJ1 PYAQ Y5D1 XTQ1 SLFP': 'Nimiq-Faucet.surge.sh',
     'NQ80 PAYN R93R D0H4 BH8T KPRT SBYE 30A3 PHDL': 'PayNim.app',
@@ -384,17 +400,20 @@ AddressBook.BOOK = {
     'NQ65 C2PJ MF8T 9RER KE4L PXL7 CE06 87KE K91V': '@King',
     'NQ20 7P7U KYCC C1LB QCMV NS22 F21X GFY7 YCAV': '@Ahmad',
     'NQ93 1H6D TS5R YSX9 GFCP DPY7 X3N9 BBVX C1PP': '@Ghocha_Baladewa',
-    // '': '@',
+    'NQ49 5DFS B4LH 0TTL BUT4 TBVR E7C2 DL3R 7L4D': '@abdou',
+    'NQ08 LMAK 00XK YYN9 CDXV ADVG CL0U HUBM J670': '@nimiq.ritvars.eu',
+    'NQ74 C9KH 191S GSXS 62CU 6H8C UFF1 5U7J 01XX': '@BTC_Rat',
 
     // Exchanges
     'NQ81 846T N9DB TD11 VJTU C7UP JLAH M6QQ 6UPB': 'HitBTC',
     'NQ55 UE76 E517 CKDR MADX 6SY9 PR70 K1XE FHM1': 'HitBTC Cold Wallet',
     'NQ57 EMG8 S4QY GE3B K4CB MQ4E 0SUS 6UT9 JFC0': 'TradeSatoshi',
     'NQ89 AAMN QJFF 7RKS 4XX0 EFXN M4QG 4MYH HMBJ': 'Changelly',
-    'NQ13 XAME QAMX 3302 13E3 ECXQ HU88 TM6R YKVK': 'KuCoin', // Payouts
-    'NQ16 HP6H 5CHC QQMD 5BE3 AFCQ QUJ9 4451 NKSM': 'KuCoin', // Payouts
-    'NQ27 B9ED 98G5 3VH7 FY8D BFP0 XNF4 BD8L TN4B': 'KuCoin', // Payins
+    'NQ13 XAME QAMX 3302 13E3 ECXQ HU88 TM6R YKVK': 'KuCoin (old, do not send!)', // Payouts
+    'NQ16 HP6H 5CHC QQMD 5BE3 AFCQ QUJ9 4451 NKSM': 'KuCoin (old, do not send!)', // Payouts
+    'NQ27 B9ED 98G5 3VH7 FY8D BFP0 XNF4 BD8L TN4B': 'KuCoin (old, do not send!)', // Payins
     'NQ04 B79B R4FF 4NGU A9H0 2PT9 9ART 5A88 J73T': 'KuCoin Cold',
+    'NQ68 HPHJ 8RQU F48M 7S3L RF6D JVAC N2J4 S8A7': 'KuCoin',
     'NQ66 QDMD SRPT B2A4 JBGJ 30M6 LBPN EK9N LR74': 'HotBit',
     'NQ17 1XMK VKC4 BHAA QH1X TH6G NC3V 40RH 8GN2': 'ChangeHero',
     'NQ37 KVUA EHER E5VA C7M0 1PF5 YBRA GE5C RB6K': 'ChangeHero',
@@ -404,6 +423,19 @@ AddressBook.BOOK = {
     'NQ61 A1PT PHFU 7FV9 X3PL GUXC E0HD SL4A 05X8': 'Bitmax', // ?
     // '': '',
     // '': '',
+
+    // Validator registrations
+    'NQ97 H1NR S3X0 CVFQ VJ9Y 9A0Y FRQN Q6EU D0PL': 'AceStaking',
+    'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': 'Helvetia Staking',
+    'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': 'Mint Pool',
+    'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': 'nim.re Staking Pool',
+    'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': 'Siam Pool',
+    'NQ05 U1RF QJNH JCS1 RDQX 4M3Y 60KR K6CN 5LKC': 'NimiqHub Staking',
+    'NQ96 X97C 94M1 6MV3 KJ0G JA5U 6VB4 6Y63 EUH4': 'Keyring Staking',
+    'NQ98 D3KE 8EQ8 Y7DK G1MT 3P5T 2PHX 18V5 UEC1': 'Moon Pool',
+    'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': 'Nova Pool',
+    'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': 'ObsidianStake',
+    'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': 'Garuda Pool',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -435,4 +467,18 @@ AddressBook.BOOK = {
     'NQ54 P5X1 UUJ5 3R8U PMS6 Y7U4 CVNS 1DGH YNFS': 'Registration test case 10 (valid, registered twice)',
     'NQ41 0EVH FAL8 ANE5 6D7R 2503 KR9T GL4V EVUR': 'Registration test case 11 (invalid, no deposit)',
     'NQ09 5J2R 4ET7 HK8X X8XX SB0F 86C2 E45A 09SJ': 'Registration test case 11 (invalid, deposit too low)',
+}
+
+AddressBook.ICONS = {
+    'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': '/pools/mainnet/helvetiastaking.svg',
+    'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': '/pools/mainnet/mintpool.svg',
+    'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': '/pools/mainnet/siampool.svg',
+    'NQ05 U1RF QJNH JCS1 RDQX 4M3Y 60KR K6CN 5LKC': '/pools/mainnet/nimiqhubstaking.png',
+    'NQ44 V95C ABVY RARR SBMC V8VE M6UH EJP0 RXYQ': '/pools/mainnet/nimrestakingpool.png',
+    'NQ97 H1NR S3X0 CVFQ VJ9Y 9A0Y FRQN Q6EU D0PL': '/pools/mainnet/acestaking.png',
+    'NQ96 X97C 94M1 6MV3 KJ0G JA5U 6VB4 6Y63 EUH4': '/pools/mainnet/keyringstaking.png',
+    'NQ98 D3KE 8EQ8 Y7DK G1MT 3P5T 2PHX 18V5 UEC1': '/pools/mainnet/moonpool.png',
+    'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': '/pools/mainnet/novapool.png',
+    'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': '/pools/mainnet/obsidianstake.png',
+    'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': '/pools/mainnet/garudapool.png',
 }
