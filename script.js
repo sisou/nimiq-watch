@@ -783,7 +783,7 @@ function _tapFaucet(event) {
     const $address = document.getElementById('faucet-address');
     const $message = document.getElementById('faucet-message');
     $message.classList.remove('success', 'error');
-    fetch(`https://faucet.nimiq-testnet.com/tapit`, {
+    fetch(`https://faucet.pos.nimiq-testnet.com/tapit`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
