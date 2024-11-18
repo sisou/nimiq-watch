@@ -581,13 +581,8 @@
         <div class="validators">
             <h2>Pre-Staking</h2>
             <p>
-                <strong style="font-size: 22px;">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.totalStake), true)%} NIM</strong> are pre-staked to {%=o.validators.length%} validators.
+                <strong style="font-size: 22px;">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.totalStake), true)%} NIM</strong> were pre-staked to {%=o.validators.length%} validators.
             </p>
-            {% if (o.totalStake > 0) { %}
-                <p>
-                    Pre-stake with the <a href="https://wallet.nimiq.com">Nimiq Wallet</a> until November 10th!
-                </p>
-            {% } %}
             {% if(o.validators.length) { %}
                 {% for(var i = 0; i < o.validators.length; i++) { %}
                     <div class="validator-row">
