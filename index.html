@@ -394,10 +394,16 @@
                         <label>Balance </label>
                         <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.balance))%} NIM</span>
                     </div>
-                    <div class="blockinfo-body-row">
-                        <label>Type </label>
-                        <span>{%=account_types[o.type]%}</span>
-                    </div>
+                    {% if (o.type !== 3) { %}
+                        <div class="blockinfo-body-row">
+                            <label>Type </label>
+                            <span>{%=account_types[o.type]%}</span>
+                        </div>
+                    {% } else { %}
+                        <div class="blockinfo-body-row">
+                            <a href="#chart-stake-distribution" onclick="_linkClicked(this);">Stake Distribution</a>
+                        </div>
+                    {% } %}
                     {% if(_labelAddress(o.address) === o.address && o.balance >= 10e5) { %}
                         <div class="blockinfo-body-row">
                             <label>Label </label>
