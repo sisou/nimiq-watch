@@ -706,6 +706,7 @@
                     {% if(
                         (useTestnet && o[address].toLowerCase().includes('testnet'))
                         || (!useTestnet && !o[address].toLowerCase().includes('testnet'))
+                        || address === 'NQ77 0000 0000 0000 0000 0000 0000 0000 0001'
                     ) %}
                     <li>
                         <img class="iqon" src="{%=_addressIcon(address)%}" loading="lazy">
