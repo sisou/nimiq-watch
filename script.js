@@ -10,9 +10,8 @@ var template = {
     accountInfo:               tmpl('template-account-info'),
     accountTransaction:        tmpl('template-account-transaction'),
     accountBlock:              tmpl('template-account-block'),
-    preStaking:                tmpl('template-pre-staking'),
     validatorRegistration:     tmpl('template-validator-registration'),
-    validatorStakers:          tmpl('template-validator-stakers'),
+    // validatorStakers:          tmpl('template-validator-stakers'),
     stakerDelegation:          tmpl('template-staker-delegation'),
     about:                     tmpl('template-about'),
     charts:                    tmpl('template-charts'),
@@ -24,7 +23,7 @@ var $infobox        = document.getElementById('infobox'),
     $status         = document.getElementById('status'),
     $height         = document.getElementById('height');
 
-var directNavigationTargets = ['#about', '#charts', '#labels', '#pre-staking', '#validator-registrations'];
+var directNavigationTargets = ['#about', '#charts', '#labels'];
 
 var default_colors = ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'];
 default_colors = default_colors.concat(default_colors, default_colors);
@@ -185,7 +184,7 @@ function _formatTxData(data) {
 }
 
 function _formatTimeAgo(timestamp) {
-    var secondsPast = parseInt(Date.now() / 1000) - timestamp;
+    var secondsPast = Math.floor(Date.now() / 1000) - timestamp;
 
     if (secondsPast < 60) return secondsPast + ' sec';
     if (secondsPast < 3600)  {
@@ -203,7 +202,9 @@ function _updateTimeAgo() {
     const nodes = document.getElementsByClassName('update-time-ago');
     for (var i = 0; i < nodes.length; i++) {
         var node = nodes[i];
-        node.textContent = _formatTimeAgo(node.getAttribute('data-timestamp'));
+        const timestamp = parseInt(node.getAttribute('data-timestamp'));
+        if (isNaN(timestamp)) continue;
+        node.textContent = _formatTimeAgo(timestamp);
     }
 }
 setInterval(_updateTimeAgo, 1000);
@@ -592,28 +593,6 @@ function _onHashChange(e) {
         value === "search" && $searchInput.focus();
         window.scrollTo(0, 0);
     }
-    else if (value === "validator-registrations") {
-        location.hash = "#pre-staking";
-    }
-    else if(value === "pre-staking") {
-        fetch(publicUrl + '/api/v2/validators').then(function(response) {
-            if (!response.ok) {
-                alert('Error: ' + response.status + ' ' + response.statusText);
-                return;
-            }
-            response.json().then(function(validators) {
-                validators.sort((a, b) => {
-                    // Sort decending
-                    return (b.deposit + b.delegatedStake) - (a.deposit + a.delegatedStake);
-                });
-                $infobox.innerHTML = template.preStaking({
-                    validators,
-                    totalStake: validators.reduce((acc, val) => acc + val.deposit + val.delegatedStake, 0),
-                });
-                window.scrollTo(0, $infobox.offsetTop - 100);
-            });
-        });
-    }
     else if(value === "about") {
         $infobox.innerHTML = template.about();
         window.scrollTo(0, $infobox.offsetTop - 100);
@@ -637,8 +616,8 @@ function _onHashChange(e) {
     else if(value === "chart-transactions-per-block") {
         _transactionsPerBlock();
     }
-    else if(value === "chart-hashing-distribution") {
-        _hashingDistribution();
+    else if(value === "chart-stake-distribution") {
+        _stakeDistribution();
     }
     else {
         var format = _detectHashFormat(value);
@@ -664,44 +643,44 @@ function _onHashChange(e) {
 
                     var $accountBasics = $infobox.getElementsByClassName('account-basics')[0];
                     if ($accountBasics) {
-                        fetch(publicUrl + `/api/v2/prestaking/${accountInfo.address.replace(/ /g, '+')}`)
+                        fetch(publicUrl + `/api/v2/staker/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
                                 return;
                             }
                             if (!response.ok) {
-                                console.error('Error fetching prestake:', response);
+                                console.error('Error fetching staker:', response);
                             }
                             response.json().then(function(data) {
                                 const $delegation = document.createElement('details');
                                 $delegation.classList.add('delegation', 'account-basics');
-                                $delegation.innerHTML = template.stakerDelegation(data.prestake);
+                                $delegation.innerHTML = template.stakerDelegation(data);
                                 $accountBasics.parentElement.insertBefore($delegation, $accountBasics.nextSibling);
                             });
                         });
 
-                        fetch(publicUrl + `/api/v2/registration/${accountInfo.address.replace(/ /g, '+')}`)
+                        fetch(publicUrl + `/api/v2/validator/${accountInfo.address.replace(/ /g, '+')}`)
                         .then(function(response) {
                             if (response.status === 404) {
                                 return;
                             }
                             if (!response.ok) {
-                                console.error('Error fetching validator registration:', response);
+                                console.error('Error fetching validator:', response);
                             }
                             response.json().then(function(data) {
                                 const $validator = document.createElement('details');
                                 $validator.classList.add('validator', 'account-basics');
-                                $validator.innerHTML = template.validatorRegistration(data.registration);
+                                $validator.innerHTML = template.validatorRegistration(data);
                                 $accountBasics.parentElement.insertBefore($validator, $accountBasics.nextSibling);
 
-                                const $stakers = document.createElement('details');
-                                // $stakers.setAttribute('open', 'open');
-                                $stakers.classList.add('stakers', 'account-basics');
-                                $stakers.innerHTML = template.validatorStakers({
-                                    deposit: data.registration.deposit_transaction.value,
-                                    stakers: data.stakers.sort((a, b) => b.stake - a.stake), // Sort descending by stake
-                                });
-                                $accountBasics.parentElement.insertBefore($stakers, $validator.nextSibling);
+                                // const $stakers = document.createElement('details');
+                                // // $stakers.setAttribute('open', 'open');
+                                // $stakers.classList.add('stakers', 'account-basics');
+                                // $stakers.innerHTML = template.validatorStakers({
+                                //     deposit: data.registration.deposit_transaction.value,
+                                //     stakers: data.stakers.sort((a, b) => b.stake - a.stake), // Sort descending by stake
+                                // });
+                                // $accountBasics.parentElement.insertBefore($stakers, $validator.nextSibling);
                             });
                         });
                     }

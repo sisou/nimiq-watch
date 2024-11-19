@@ -707,35 +707,35 @@ a.info-icon:active {
     margin: auto;
 }
 
-#infobox .hashing-distribution-chart-wrapper {
+#infobox .stake-distribution-chart-wrapper {
     width: 450px;
     /* height: 450px; */
     margin: auto;
 }
 
-#infobox .hashing-distribution-chart-wrapper .miners-table {
+#infobox .stake-distribution-chart-wrapper .validators-table {
     width: 100%;
     text-align: right;
     margin-top: 32px;
     border-collapse: collapse;
 }
 
-#infobox .hashing-distribution-chart-wrapper .miners-table th:first-child,
-#infobox .hashing-distribution-chart-wrapper .miners-table td:first-child {
+#infobox .stake-distribution-chart-wrapper .validators-table th:first-child,
+#infobox .stake-distribution-chart-wrapper .validators-table td:first-child {
     text-align: left;
 }
 
-#infobox .hashing-distribution-chart-wrapper .miners-table th,
-#infobox .hashing-distribution-chart-wrapper .miners-table td {
+#infobox .stake-distribution-chart-wrapper .validators-table th,
+#infobox .stake-distribution-chart-wrapper .validators-table td {
     padding: 6px 0;
 }
 
-#infobox .hashing-distribution-chart-wrapper .miners-table th {
+#infobox .stake-distribution-chart-wrapper .validators-table th {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 #infobox .global-hashrate-range-switch,
-#infobox .hashing-distribution-range-switch {
+#infobox .stake-distribution-range-switch {
     float: right;
     width: 50%;
 }
@@ -842,7 +842,7 @@ a.blocklist-cell:focus::after {
 }
 
 .blocklist-cell > hash,
-.hashing-distribution-chart-wrapper hash {
+.stake-distribution-chart-wrapper hash {
     font-size: 0.85em;
 }
 
@@ -1077,7 +1077,7 @@ footer a {
         padding-right: 20%;
     }
 
-    #infobox .hashing-distribution-chart-wrapper {
+    #infobox .stake-distribution-chart-wrapper {
         width: 100%;
         height: 100%;
         margin: auto;

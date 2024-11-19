@@ -135,19 +135,16 @@
 
                     <div class="submenu">
                         <a href="#labels" onclick="_linkClicked(this);">Address Labels</a>
-                        <a href="#pre-staking" onclick="_linkClicked(this);">Pre-Staking</a>
                     </div>
                 </div>
                 <a href="#labels" onclick="_linkClicked(this, true);" class="show-mobile-block">Address Labels</a>
-                <a href="#pre-staking" onclick="_linkClicked(this, true);" class="show-mobile-block">Pre-Staking</a>
                 <div class="submenu-container">
                     <a href="#charts" onclick="_linkClicked(this, true);" id="charts">Charts</a>
 
                     <div class="submenu">
                         <!--<a href="#chart-wealth-distribution" onclick="_linkClicked(this);">Wealth Distribution</a>-->
-                        <a href="#chart-global-hashrate" onclick="_linkClicked(this);">Global Hashrate</a>
+                        <a href="#chart-stake-distribution" onclick="_linkClicked(this);">Stake Distribution</a>
                         <a href="#chart-transactions-per-block" onclick="_linkClicked(this);">Transactions</a>
-                        <a href="#chart-hashing-distribution" onclick="_linkClicked(this);">Hashing Distribution</a>
                     </div>
                 </div>
                 <!--<div class="submenu-container">
@@ -234,7 +231,7 @@
             </div>
             <div class="hash">
                 <h3>Hash</h3>
-                <hash>{%=o.hash%}</hash>
+                <hash>{% if(o.hash) { %}{%=o.hash%}{% } else { %}-{% } %}</hash>
             </div>
         </div>
         <div class="blockinfo-body">
@@ -249,34 +246,40 @@
                 </div>
                 <div class="blockinfo-body-row">
                     <label>Block Reward </label>
-                    <span style="cursor: help;" title="Block reward: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward))%} NIM, fees: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward + o.fees))%} NIM</span>
+                    {% if (o.reward) { %}
+                        <span style="cursor: help;" title="Block reward: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward))%} NIM, fees: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward + o.fees))%} NIM</span>
+                    {% } else { %}
+                        <span>-</span>
+                    {% } %}
                 </div>
             </div>
             <div class="blockinfo-body-right">
                 <div class="blockinfo-body-row">
                     <label>Timestamp </label>
-                    <span>{% var date = new Date(o.timestamp * 1000); print(date.toLocaleString()); %}</span>
+                    <span>{% if (o.timestamp) { var date = new Date(o.timestamp * 1000); print(date.toLocaleString()); } else { %}-{% } %}</span>
                 </div>
-                <div class="blockinfo-body-row">
-                    <label>Difficulty </label>
-                    <span>{%=(Math.round(o.difficulty * 100) / 100)%}</span>
-                </div>
+                {% if(o.difficulty) { %}
+                    <div class="blockinfo-body-row">
+                        <label>Difficulty </label>
+                        <span>{%=(Math.round(o.difficulty * 100) / 100)%}</span>
+                    </div>
+                {% } %}
                 <div class="blockinfo-body-row">
                     <label>Size </label>
-                    <span>{%=_formatSize(o.size)%}</span>
+                    <span>{% if(o.size) { %}{%=_formatSize(o.size)%}{% } else { %}-{% } %}</span>
                 </div>
             </div>
             <div class="blockinfo-miner">
-                <div class="blockinfo-body-row">
-                    <label>Miner </label>
-                    <hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
-                </div>
-                {% if(o.extra_data) { %}
+                {% if(o.miner_address) { %}
                     <div class="blockinfo-body-row">
-                        <label>Extra Data </label>
-                        <span class="blockinfo-extra-data">{%=o.extra_data%}</span>
+                        <label>Miner </label>
+                        <hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
                     </div>
                 {% } %}
+                <div class="blockinfo-body-row">
+                    <label>Extra Data </label>
+                    <span class="blockinfo-extra-data">{% if(o.extra_data) { %}{%=o.extra_data%}{% } else { %}-{% } %}</span>
+                </div>
                 <!--
                 <div class="blockinfo-body-row">
                     <label>PoW </label>
@@ -548,11 +551,15 @@
 
     <script type="text/x-tmpl" id="template-account-block">
         <div class="event-item">
-            <span class="event-amount green" title="Block reward: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward))%} NIM, fees: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM">
-                +{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward + o.fees))%} NIM&#8203;
-            </span>
+            {% if (o.reward) { %}
+                <span class="event-amount green" title="Block reward: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward))%} NIM, fees: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM">
+                    +{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward + o.fees))%} NIM&#8203;
+                </span>
+            {% } else { %}
+                <span class="event-amount">-</span>
+            {% } %}
             <span class="event-name">Mined block</span><br>
-            <span class="event-datetime">{% var date = new Date(o.timestamp * 1000); print(date.toLocaleString()); %}</span>
+            <span class="event-datetime">{% if (o.timestamp) { var date = new Date(o.timestamp * 1000); print(date.toLocaleString()); } else { %}-{% } %}</span>
             <span class="event-height">(<a href="#{%=o.height%}" onclick="_linkClicked(this);">#{%=o.height%}</a>)</span>
         </div>
     </script>
@@ -562,49 +569,24 @@
             #{%=o.height%}
         </a>
         <div class="blocklist-cell update-time-ago" data-timestamp="{%=o.timestamp%}">
-            <!-- {% var time = new Date(o.timestamp * 1000); print(time.toLocaleTimeString()); %} -->
-            {%=_formatTimeAgo(o.timestamp)%}
+            {% if (o.timestamp) { print(_formatTimeAgo(o.timestamp)); } else { %}-{% } %}
         </div>
         <div class="blocklist-cell">
             <span class="hide-mobile">{%=o.transaction_count%} transaction{% if(o.transaction_count !== 1) print('s'); %}</span>
             <span class="show-mobile">{%=o.transaction_count%} tx{% if(o.transaction_count !== 1) print('s'); %}</span>
         </div>
         <div class="blocklist-cell miner-address ellipsis">
-            <span class="hide-mobile">found by </span><hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
+            {% if(o.miner_address) { %}
+                <span class="hide-mobile">found by </span><hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
+            {% } else { %}
+                -
+            {% } %}
         </div>
         <div class="blocklist-cell hide-xs">
-            {%=_formatSize(o.size)%}
-        </div>
-    </script>
-
-    <script type="text/x-tmpl" id="template-pre-staking">
-        <div class="validators">
-            <h2>Pre-Staking</h2>
-            <p>
-                <strong style="font-size: 22px;">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.totalStake), true)%} NIM</strong> were pre-staked to {%=o.validators.length%} validators.
-            </p>
-            {% if(o.validators.length) { %}
-                {% for(var i = 0; i < o.validators.length; i++) { %}
-                    <div class="validator-row">
-                        <img class="iqon" src="{%=_addressIcon(o.validators[i].address)%}">
-                        <div class="validator-data">
-                            <hash>
-                                <a href="#{%=o.validators[i].address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">
-                                    {%=_labelAddress(o.validators[i].address)%}
-                                </a>
-                            </hash>
-                            <span>
-                                {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.validators[i].deposit + o.validators[i].delegatedStake), true)%} NIM
-                            </span>
-                            <span>
-                                ({%=(Math.round((o.validators[i].deposit + o.validators[i].delegatedStake) / o.totalStake * 10000) / 100)%}%)
-                            </span>
-                        </div>
-
-                    </div>
-                {% } %}
+            {% if(o.size) { %}
+                {%=_formatSize(o.size)%}
             {% } else { %}
-                <div class="no-more">No validators registered</div>
+                -
             {% } %}
         </div>
     </script>
@@ -612,43 +594,20 @@
     <script type="text/x-tmpl" id="template-validator-registration">
         <summary>Validator Registration</summary>
         <div class="blockinfo-body-row">
-            <label>Deposit</label>
-            {% if (o.deposit_transaction) { %}
-                <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.deposit_transaction.value))%} NIM</span>
-            {% } else { %}
-                <span>-</span>
-            {% } %}
+            <label>Stake {%=o.inactivityFlag ? '(inactive)' : o.retired ? '(retired)' : o.jailedFrom ? '(jailed)' : ''%}</label>
+            <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.balance))%} NIM</span>
         </div>
         <div class="blockinfo-body-row">
-            <label>Signing Key</label>
-            {% if (o.transaction_01) { %}
-                <hash class="blockinfo-extra-data">{%=o.transaction_01.recipient_data.substring(24, 88)%}</hash>
-            {% } else { %}
-                <span>-</span>
-            {% } %}
+            <label>Signing Public Key</label>
+            <hash class="blockinfo-extra-data">{%=o.signingKey%}</hash>
         </div>
         <div class="blockinfo-body-row">
-            <label>Voting Key</label>
-            {% if (o.transaction_02
-                && o.transaction_03
-                && o.transaction_04
-                && o.transaction_05
-                && o.transaction_06
-                ) { %}
-                <hash class="blockinfo-extra-data">
-                    {%=o.transaction_02.recipient_data.substring(14)
-                    %}{%=o.transaction_03.recipient_data.substring(14)
-                    %}{%=o.transaction_04.recipient_data.substring(14)
-                    %}{%=o.transaction_05.recipient_data.substring(14)
-                    %}{%=o.transaction_06.recipient_data.substring(14)%}
-                </hash>
-            {% } else { %}
-                <span>-</span>
-            {% } %}
+            <label>Voting Public Key</label>
+            <hash class="blockinfo-extra-data">{%=o.votingKey%}</hash>
         </div>
     </script>
 
-    <script type="text/x-tmpl" id="template-validator-stakers">
+    <!-- <script type="text/x-tmpl" id="template-validator-stakers">
         <summary>Stake: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stakers.reduce((sum, staker) => sum + staker.stake, 0) + o.deposit))%} NIM</summary>
 
         <div class="staker-row">
@@ -672,7 +631,7 @@
         {% } else { %}
             <div class="no-more">No stakers delegated</div>
         {% } %}
-    </script>
+    </script> -->
 
     <script type="text/x-tmpl" id="template-staker-delegation">
         <summary>Delegation</summary>
@@ -685,7 +644,7 @@
                     </a>
                 </hash>
                 <span>
-                    {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.stake))%} NIM
+                    {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.balance))%} NIM
                 </span>
             </div>
         </div>
@@ -717,9 +676,8 @@
             <h2>Charts</h2>
             <p>
                 <!--<a href="#chart-wealth-distribution">Wealth Distribution</a>-->
-                <a href="#chart-global-hashrate">Global Hashrate</a>
+                <a href="#chart-stake-distribution">Stake Distribution</a>
                 <a href="#chart-transactions-per-block">Transactions</a>
-                <a href="#chart-hashing-distribution">Hashing Distribution</a>
             </p>
         </div>
     </script>
@@ -751,67 +709,20 @@
         }
     </script>
 
-    <script type="text/x-tmpl" id="template-global-hashrate-chart">
-        <div class="switch-toggle switch-candy global-hashrate-range-switch">
-            <input id="global-hashrate-range-day" name="global-hashrate-range" type="radio" onclick="switchGlobalHashrateRange('day')">
-            <label for="global-hashrate-range-day" onclick="">D<span class="hide-xs">ay</span></label>
-
-            <input id="global-hashrate-range-week" name="global-hashrate-range" type="radio" onclick="switchGlobalHashrateRange('week')">
-            <label for="global-hashrate-range-week" onclick="">W<span class="hide-xs">eek</span></label>
-
-            <input id="global-hashrate-range-month" name="global-hashrate-range" type="radio" checked="checked" onclick="switchGlobalHashrateRange('month')">
-            <label for="global-hashrate-range-month" onclick="">M<span class="hide-xs">onth</span></label>
-
-            <input id="global-hashrate-range-year" name="global-hashrate-range" type="radio" onclick="switchGlobalHashrateRange('year')">
-            <label for="global-hashrate-range-year" onclick="">Y<span class="hide-xs">ear</span></label>
-
-            <!--
-            <input id="global-hashrate-range-all" name="global-hashrate-range" type="radio" onclick="switchGlobalHashrateRange('all')">
-            <label for="global-hashrate-range-all" onclick="">all</label>
-            -->
-
-            <a></a>
-        </div>
-        <h2>Global Hashrate</h2>
-        <small>Estimated from mining difficulty</small>
-        <canvas class="chart global-hashrate-chart"></canvas>
-        <div class="blocklist-loader over-canvas">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.922382 46.027046" height="46.027046mm" width="45.922382mm"><g fill="#ffc107" fill-rule="evenodd"><path d="M19.326194 1.029874C18.994341.461027 18.191007 0 17.533238 0H7.199695c-.658756 0-1.460603.461027-1.792971 1.029874L.2489 9.879957c-.331867.568829-.331867 1.491401 0 2.060247l5.157824 8.850065c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333543c.658756 0 1.460603-.461027 1.792956-1.030375l5.157824-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".66666667"/><path d="M40.515659 13.128918c-.331867-.568847-1.135201-1.029874-1.792971-1.029874H28.389146c-.658756 0-1.460603.461027-1.792956 1.029874L21.438366 21.979c-.331867.568829-.331867 1.491401 0 2.060248l5.157824 8.850065c.331867.568847 1.135201 1.030375 1.792956 1.030375h10.333542c.658756 0 1.460604-.461028 1.792971-1.030375l5.157825-8.850065c.331866-.568847.331866-1.490918 0-2.060248z"/><path d="M19.501729 25.236275c-.331867-.568847-1.135201-1.029874-1.79297-1.029874H7.375231c-.658756 0-1.460603.461027-1.792971 1.029874L.424436 34.086358c-.331867.568829-.331867 1.491401 0 2.060247L5.58226 44.99667c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333528c.65877 0 1.460617-.461027 1.79297-1.030375l5.157825-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".33333333"/></g></svg>
-        </div>
-        <div class="chart-valid-info"></div>
-        <p><small><strong>Disclaimer:</strong> The graph shows the averaged global hashrate for the respective intervals. The global hashrate for each block is estimated from its difficutly, which is based on the time it took for the last 120 blocks to be mined.</small></p>
-    </script>
-    <script src="/script-chart-global-hashrate.js"></script>
-
-    <script type="text/x-tmpl" id="template-hashing-distribution-chart">
-        <div class="switch-toggle switch-candy hashing-distribution-range-switch">
-            <input id="hashing-distribution-range-1hour" name="hashing-distribution-range" type="radio" onclick="switchHashingDistributionRange(1)">
-            <label for="hashing-distribution-range-1hour" onclick="">1 h<span class="hide-mobile">our</span></label>
-
-            <input id="hashing-distribution-range-2hours" name="hashing-distribution-range" type="radio" onclick="switchHashingDistributionRange(2)">
-            <label for="hashing-distribution-range-2hours" onclick="">2 h<span class="hide-mobile">ours</span></label>
-
-            <input id="hashing-distribution-range-12hours" name="hashing-distribution-range" type="radio" onclick="switchHashingDistributionRange(12)">
-            <label for="hashing-distribution-range-12hours" onclick="">12 h<span class="hide-mobile">ours</span></label>
-
-            <input id="hashing-distribution-range-24hours" name="hashing-distribution-range" type="radio" checked="checked" onclick="switchHashingDistributionRange(24)">
-            <label for="hashing-distribution-range-24hours" onclick="">24 h<span class="hide-mobile">ours</span></label>
-
-            <a></a>
-        </div>
-        <h2>Hashing Distribution</h2>
-        <small>Number of blocks mined per address</small>
-        <div class="hashing-distribution-chart-wrapper">
+    <script type="text/x-tmpl" id="template-stake-distribution-chart">
+        <h2>Stake Distribution</h2>
+        <small>Stake per validator</small>
+        <div class="stake-distribution-chart-wrapper">
             <canvas class="chart"></canvas>
             <div class="blocklist-loader over-canvas">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.922382 46.027046" height="46.027046mm" width="45.922382mm"><g fill="#ffc107" fill-rule="evenodd"><path d="M19.326194 1.029874C18.994341.461027 18.191007 0 17.533238 0H7.199695c-.658756 0-1.460603.461027-1.792971 1.029874L.2489 9.879957c-.331867.568829-.331867 1.491401 0 2.060247l5.157824 8.850065c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333543c.658756 0 1.460603-.461027 1.792956-1.030375l5.157824-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".66666667"/><path d="M40.515659 13.128918c-.331867-.568847-1.135201-1.029874-1.792971-1.029874H28.389146c-.658756 0-1.460603.461027-1.792956 1.029874L21.438366 21.979c-.331867.568829-.331867 1.491401 0 2.060248l5.157824 8.850065c.331867.568847 1.135201 1.030375 1.792956 1.030375h10.333542c.658756 0 1.460604-.461028 1.792971-1.030375l5.157825-8.850065c.331866-.568847.331866-1.490918 0-2.060248z"/><path d="M19.501729 25.236275c-.331867-.568847-1.135201-1.029874-1.79297-1.029874H7.375231c-.658756 0-1.460603.461027-1.792971 1.029874L.424436 34.086358c-.331867.568829-.331867 1.491401 0 2.060247L5.58226 44.99667c.331867.568847 1.135202 1.030375 1.792971 1.030375h10.333528c.65877 0 1.460617-.461027 1.79297-1.030375l5.157825-8.850065c.331867-.568846.331867-1.490918 0-2.060247z" fill-opacity=".33333333"/></g></svg>
             </div>
             <div class="chart-valid-info"></div>
 
-            <table class="miners-table"></table>
+            <table class="validators-table"></table>
         </div>
     </script>
-    <script src="/script-chart-hashing-distribution.js"></script>
+    <script src="/script-chart-stake-distribution.js"></script>
 
     <!--
     <script type="text/x-tmpl" id="template-wealth-distribution-chart">
