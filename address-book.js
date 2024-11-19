@@ -18,6 +18,8 @@ var AddressBook = {
 }
 
 AddressBook.BOOK = {
+    'NQ77 0000 0000 0000 0000 0000 0000 0000 0001': 'Staking Contract',
+
     // Mainnet Pools
     'NQ48 8CKH BA24 2VR3 N249 N8MN J5XX 74DB 5XJ8': 'Skypool',
     'NQ58 U4HN TVVA FCRS VLYL 8XTL K0B7 2FVD EC6B': 'Skypool Gundam',
@@ -470,6 +472,7 @@ AddressBook.BOOK = {
 }
 
 AddressBook.ICONS = {
+    'NQ77 0000 0000 0000 0000 0000 0000 0000 0001': '/stakingcontract.svg',
     'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': '/pools/mainnet/helvetiastaking.svg',
     'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': '/pools/mainnet/mintpool.svg',
     'NQ38 VK34 DRBL S3CN M9KM 8UJN 9JY2 2KFN VQQH': '/pools/mainnet/siampool.svg',
