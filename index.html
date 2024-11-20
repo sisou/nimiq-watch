@@ -45,7 +45,7 @@
 
         // Dummy object to prevent JS errors
         var nimiqLoaded = false;
-        var latestBlockHeight = 0;
+        var latestBlock = undefined;
 
         function _onNimiqLoaded() {
             document.getElementById('search-submit').removeAttribute('disabled');
@@ -72,12 +72,15 @@
             $status.classList.remove('consensus-established', 'synchronizing');
         }
 
-        function _onHeadChanged(height) {
-            if(height > 1) $height.textContent = ' @ #' + height;
+        function _onHeadChanged(block) {
+            block.timestamp = new Date(block.date).getTime() / 1000;
+            delete block.date;
 
-            while(blocklistBuilt && latestBlockHeight < height) {
-                latestBlockHeight++;
-                _getBlockListInfo(latestBlockHeight, _addBlockToListOfLatestBlocks);
+            if(block.height > 1) $height.textContent = ' @ #' + block.height;
+
+            if(blocklistBuilt && (!latestBlock || latestBlock.height < block.height)) {
+                latestBlock = block;
+                _addBlockToListOfLatestBlocks(latestBlock);
             }
         }
 
@@ -101,8 +104,8 @@
                 let msg;
                 if (typeof e.data === 'string') msg = JSON.parse(e.data);
                 else msg = JSON.parse(new TextDecoder().decode(e.data));
-                if (msg.type !== 'height') return;
-                _onHeadChanged(msg.height);
+                if (msg.type !== 'block') return;
+                _onHeadChanged(msg.block);
             };
             ws.onerror = function(e) {
                 console.error(e);
@@ -586,8 +589,6 @@
         <div class="blocklist-cell miner-address ellipsis">
             {% if(o.miner_address) { %}
                 <hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
-            {% } else { %}
-                -
             {% } %}
         </div>
         <div class="blocklist-cell hide-xs">
