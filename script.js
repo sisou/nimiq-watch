@@ -519,7 +519,9 @@ function _buildListOfLatestBlocks(self) {
 
             if(!data) alert('No data received from https://api.nimiq.watch/latest/' + limit + '/' + skip + '!');
 
-            latestBlockHeight = Math.max(latestBlockHeight, data[data.length - 1].height);
+            if (latestBlock && data[data.length - 1].height > latestBlock.height) {
+                latestBlock = data[data.length - 1];
+            }
 
             if(self) data.reverse();
 
