@@ -73,7 +73,7 @@
         }
 
         function _onHeadChanged(block) {
-            block.timestamp = new Date(block.date).getTime() / 1000;
+            block.timestamp = Math.floor(new Date(block.date).getTime() / 1000);
             delete block.date;
 
             if(block.height > 1) $height.textContent = ' @ #' + block.height;
