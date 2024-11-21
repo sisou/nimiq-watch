@@ -279,7 +279,7 @@
             <div class="blockinfo-miner">
                 {% if(o.miner_address) { %}
                     <div class="blockinfo-body-row">
-                        <label>Miner </label>
+                        <label>Producer </label>
                         <hash><a href="#{%=o.miner_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.miner_address)%}</a></hash>
                     </div>
                 {% } %}
