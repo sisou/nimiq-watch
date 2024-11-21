@@ -74,6 +74,8 @@
         function _onHeadChanged(block) {
             block.timestamp = Math.floor(new Date(block.date).getTime() / 1000);
             delete block.date;
+            block.miner_address = block.creator_address;
+            delete block.creator_address;
 
             if(block.height > 1) $height.textContent = ' @ #' + block.height;
 
