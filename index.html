@@ -250,11 +250,12 @@
                     <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.value))%} NIM</span>
                 </div>
                 <div class="blockinfo-body-row">
-                    <label>Block Reward </label>
                     {% if (o.reward) { %}
+                        <label>Block Reward </label>
                         <span style="cursor: help;" title="Block reward: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward))%} NIM, fees: {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward + o.fees))%} NIM</span>
                     {% } else { %}
-                        <span>-</span>
+                        <label>Transaction fees </label>
+                        <span style="cursor: help;" title="Transaction fees">{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM</span>
                     {% } %}
                 </div>
             </div>
@@ -567,7 +568,9 @@
                     +{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.reward + o.fees))%} NIM&#8203;
                 </span>
             {% } else { %}
-                <span class="event-amount">-</span>
+                <span class="event-amount green" title="Transaction fees">
+                    +{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fees))%} NIM&#8203;
+                </span>
             {% } %}
             <span class="event-name">Mined block</span><br>
             <span class="event-datetime">{% if (o.timestamp) { var date = new Date(o.timestamp * 1000); print(date.toLocaleString()); } else { %}-{% } %}</span>
