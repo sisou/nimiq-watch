@@ -438,6 +438,7 @@ AddressBook.BOOK = {
     'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': 'Nova Pool',
     'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': 'ObsidianStake',
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': 'Garuda Pool',
+    'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': 'NimiqCafe Staking',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -464,4 +465,5 @@ AddressBook.ICONS = {
     'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': '/pools/mainnet/novapool.png',
     'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': '/pools/mainnet/obsidianstake.png',
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': '/pools/mainnet/garudapool.png',
+    'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': '/pools/mainnet/nimiqcafestaking.png',
 }
