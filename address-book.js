@@ -439,6 +439,7 @@ AddressBook.BOOK = {
     'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': 'ObsidianStake',
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': 'Garuda Pool',
     'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': 'NimiqCafe Staking',
+    'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': 'NimiqPocket Staking',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -450,6 +451,7 @@ AddressBook.BOOK = {
     'NQ17 D2ES UBTP N14D RG4E 2KBK 217A 2GH2 NNY1': 'Fastspot (Testnet)',
     'NQ12 0XL5 5KUC 7LAM NUNA 59BV XE4K 6SDT 5E0A': 'ROYAL NIM CASINO (Testnet)',
     'NQ60 29BE CJUY U9PA GNNE RTXC HF6K C8D3 K36L': 'Nimiq Lottery (Testnet)',
+    'NQ95 CUFY Q8LC HC2H NQNM 6NM3 DT42 8Q72 N2BJ': 'NimiqPocket Staking (Testnet)',
 }
 
 AddressBook.ICONS = {
@@ -466,4 +468,5 @@ AddressBook.ICONS = {
     'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': '/pools/mainnet/obsidianstake.png',
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': '/pools/mainnet/garudapool.png',
     'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': '/pools/mainnet/nimiqcafestaking.png',
+    'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': '/pools/mainnet/nimiqpocket.png',
 }
