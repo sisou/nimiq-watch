@@ -438,6 +438,8 @@ AddressBook.BOOK = {
     'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': 'Nova Pool',
     'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': 'ObsidianStake',
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': 'Garuda Pool',
+    'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': 'NimiqCafe Staking',
+    'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': 'NimiqPocket Staking',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -452,9 +454,10 @@ AddressBook.BOOK = {
     'NQ60 29BE CJUY U9PA GNNE RTXC HF6K C8D3 K36L': 'Nimiq Lottery (Testnet)',
 
     // Albatross Testnet
-    'NQ65 DHN8 4BSR 5YSX FC3V BB5J GKM2 GB2L H17C': 'AceStaking',
-    'NQ57 M1NT JRQA FGD2 HX1P FN2G 611P JNAE K7HN': 'Mint Pool',
-    'NQ49 E4LQ FN9M B9BP 0FRE BCL5 MHFY TGQE D4XX': 'Helvetia Staking',
+    'NQ65 DHN8 4BSR 5YSX FC3V BB5J GKM2 GB2L H17C': 'AceStaking (Testnet)',
+    'NQ57 M1NT JRQA FGD2 HX1P FN2G 611P JNAE K7HN': 'Mint Pool (Testnet)',
+    'NQ49 E4LQ FN9M B9BP 0FRE BCL5 MHFY TGQE D4XX': 'Helvetia Staking (Testnet)',
+    'NQ95 CUFY Q8LC HC2H NQNM 6NM3 DT42 8Q72 N2BJ': 'NimiqPocket Staking (Testnet)',
 
     // Stefan's registration test cases
     'NQ37 RD52 GEGP EKP8 9QLK VYR7 MXHN TGMK SX6T': 'Registration test case 01 (invalid, too early)',
@@ -484,4 +487,6 @@ AddressBook.ICONS = {
     'NQ85 EA0M YF3E P9AX SM2C 58KX GD0B SXJE K2PJ': '/pools/mainnet/novapool.png',
     'NQ15 5JNS U7CE RAH5 3T02 F8A9 JCT6 QMG9 7TSV': '/pools/mainnet/obsidianstake.png',
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': '/pools/mainnet/garudapool.png',
+    'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': '/pools/mainnet/nimiqcafestaking.png',
+    'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': '/pools/mainnet/nimiqpocket.png',
 }
