@@ -430,7 +430,7 @@ AddressBook.BOOK = {
     // '': '',
     // '': '',
 
-    // Validator registrations
+    // Validator pool registrations
     'NQ97 H1NR S3X0 CVFQ VJ9Y 9A0Y FRQN Q6EU D0PL': 'AceStaking',
     'NQ37 6EL5 BP9K XL1A 3ED0 L3EC NPR5 C9D3 BRKG': 'Helvetia Staking',
     'NQ53 M1NT S3JD TAGM CBTK 01PX YD3U B1DE GYHB': 'Mint Pool',
@@ -444,6 +444,11 @@ AddressBook.BOOK = {
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': 'Garuda Pool',
     'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': 'NimiqCafe Staking',
     'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': 'NimiqPocket Staking',
+
+    // Private validators
+    'NQ60 GH2T VEA2 CUR5 SXAD QU9B 7ELD YMG5 5T7U': 'Private Whalidator',
+    'NQ19 AC1J 0S6V KDYU 6YDQ RC57 9VH9 EEHP 9RFK': 'Matt\'s Validator',
+    'NQ51 LM8E Q8LS 53TX GGDG 26M4 VX4Y XRE2 8JDT': 'selfcrypto.io',
 
     // Testnet
     'NQ31 QEPR ED7V 00KC P7UC P1PR DKJC VNU7 E461': 'pool.nimiq-testnet.com',
@@ -473,4 +478,6 @@ AddressBook.ICONS = {
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': '/pools/mainnet/garudapool.png',
     'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': '/pools/mainnet/nimiqcafestaking.png',
     'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': '/pools/mainnet/nimiqpocket.png',
+    'NQ60 GH2T VEA2 CUR5 SXAD QU9B 7ELD YMG5 5T7U': '/validators/mainnet/whalidator.png',
+    'NQ51 LM8E Q8LS 53TX GGDG 26M4 VX4Y XRE2 8JDT': '/validators/mainnet/selfcrypto.png',
 }
