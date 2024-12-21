@@ -481,7 +481,11 @@
                         </div>
                         <div class="blockinfo-body-row">
                             <label>Timeout </label>
-                            <span>{%=o.data.timeout%}</span>
+                            {% if (o.data.timeout < 3456000) { %}
+                                <span>{%=o.data.timeout%}</span>
+                            {% } else { %}
+                                <span>{%= new Date(o.data.timeout).toLocaleString() %}</span>
+                            {% } %}
                         </div>
                         <div class="blockinfo-body-row">
                             <label>Hash Count </label>
