@@ -242,8 +242,15 @@ function _getAccountInfo(address, callback) {
     });
 }
 
+let TRANSITION_BLOCK = 3_456_000;
+let TRANSITION_TIMESTAMP = 1732034720000;
+if (useTestnet) {
+    TRANSITION_BLOCK = 3_032_010;
+    TRANSITION_TIMESTAMP = 1731528000000;
+}
+
 function _populateComputedVestingData(account, callback) {
-    if(latestBlockHeight === 0) return setTimeout(_populateComputedVestingData, 200, account, callback);
+    if(!latestBlock) return setTimeout(_populateComputedVestingData, 200, account, callback);
 
     account.availableBalance = _calculateVestingAvailableBalance(account.balance, account.data);
     account.steps = _calculateVestingSteps(account.data);
@@ -252,29 +259,65 @@ function _populateComputedVestingData(account, callback) {
 }
 
 function _calculateVestingAvailableBalance(balance, data) {
+    let startTime;
+    let timeStep;
+    if ('step_blocks' in data) {
+        startTime = data.start <= TRANSITION_BLOCK
+            ? TRANSITION_TIMESTAMP - (TRANSITION_BLOCK - data.start) * 60_000
+            : TRANSITION_TIMESTAMP + (data.start - TRANSITION_BLOCK) * 60_000;
+        timeStep = data.step_blocks * 60_000;
+    } else {
+        startTime = data.start_time;
+        timeStep = data.time_step;
+    }
+
     return (balance - data.total_amount)
         + Math.min(
             data.total_amount,
-            Math.max(0, Math.floor((latestBlockHeight - data.start) / data.step_blocks)) * data.step_amount
+            Math.max(0, Math.floor((Date.now() - startTime) / timeStep)) * data.step_amount
         );
 }
 
 function _calculateVestingSteps(data) {
-    var steps = [];
-    var numberSteps = Math.ceil(data.total_amount / data.step_amount);
+    const steps = [];
+    const numberSteps = Math.ceil(data.total_amount / data.step_amount);
 
     for (var i = 1; i <= numberSteps; i++) {
-        var stepHeight = data.start + i * data.step_blocks;
-        var stepHeightDelta = stepHeight - latestBlockHeight;
-        var timestamp = Math.round(Date.now() / 1000) + stepHeightDelta * Nimiq.Policy.BLOCK_TIME;
-        var amount = (i < numberSteps && data.step_amount) || data.total_amount - (i - 1) * data.step_amount;
+        let stepHeight;
+        let startTime;
+        let timeStep;
+        if ('step_blocks' in data) {
+            const _stepHeight = data.start + i * data.step_blocks;
+            if (_stepHeight < TRANSITION_BLOCK) {
+                stepHeight = _stepHeight;
+            }
+            startTime = data.start <= TRANSITION_BLOCK
+                ? TRANSITION_TIMESTAMP - (TRANSITION_BLOCK - data.start) * 60_000
+                : TRANSITION_TIMESTAMP + (data.start - TRANSITION_BLOCK) * 60_000;
+            timeStep = data.step_blocks * 60_000;
+        } else {
+            startTime = data.start_time;
+            timeStep = data.time_step;
+        }
 
-        steps.push({
-            height: stepHeight,
-            timestamp: timestamp,
-            amount: amount,
-            isFuture: stepHeight > latestBlockHeight
-        });
+        let timestamp = startTime + i * timeStep;
+
+        let amount = (i < numberSteps && data.step_amount) || data.total_amount - (i - 1) * data.step_amount;
+
+        if (stepHeight) {
+            steps.push({
+                height: stepHeight,
+                timestamp,
+                amount,
+                isFuture: timestamp > Date.now(),
+            });
+        } else {
+            steps.push({
+                timestamp,
+                amount,
+                isFuture: timestamp > Date.now(),
+            });
+        }
     }
 
     return steps;
@@ -548,6 +591,9 @@ function _buildListOfLatestBlocks(self) {
             }
 
             blocklistBuilt = true;
+            if (!latestBlock) {
+                latestBlock = data[0];
+            }
         });
     });
 }
