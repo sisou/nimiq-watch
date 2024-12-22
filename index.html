@@ -444,20 +444,26 @@
                         {% for(var i = 0; i < o.steps.length; i++) { %}
                                 <div class="blockinfo-body-row">
                                 <label>
-                                    <span class="event-height">
-                                        {% if(o.steps[i].isFuture) { %}
-                                            #{%=o.steps[i].height%}
-                                        {% } else { %}
+                                    {% if ('height' in o.steps[i]) { %}
+                                        <span class="event-height">
                                             <a href="#{%=o.steps[i].height%}" onclick="_linkClicked(this);">#{%=o.steps[i].height%}</a>
-                                        {% } %}
-                                    </span>
-                                    <span class="event-datetime">({% var date = new Date(o.steps[i].timestamp * 1000); print(date.toLocaleString()); %}*)</span>
+                                        </span>
+                                        <span class="event-datetime">({%= new Date(o.steps[i].timestamp).toLocaleString() %}*)</span>
+                                    {% } else { %}
+                                        <span class="event-datetime">{%= new Date(o.steps[i].timestamp).toLocaleString() %}</span>
+                                    {% } %}
                                 </label>
-                                <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.steps[i].amount))%} NIM</span>
+                                <span>
+                                    {% if (!o.steps[i].isFuture) { %}
+                                        <strong>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.steps[i].amount))%} NIM</strong>
+                                    {% } else { %}
+                                        {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.steps[i].amount))%} NIM
+                                    {% } %}
+                                </span>
                             </div>
                         {% } %}
                         <div class="blockinfo-body-row">
-                            <small>* Estimated from the current time.</small>
+                            <small>* Estimated from the PoS transition block.</small>
                         </div>
                     </div>
                 {% } %}
