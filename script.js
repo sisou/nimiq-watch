@@ -741,7 +741,6 @@ function _onHashChange(e) {
                 });
                 break;
             case "Tx or Block Hash":
-                value = Nimiq.BufferUtils.toBase64(Nimiq.BufferUtils.fromHex(value));
                 _getTransactionInfo(value, function(txInfo) {
                     if(!txInfo || txInfo.message) {
                         _getBlockInfo(value, function(blockInfo) {
