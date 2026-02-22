@@ -403,7 +403,6 @@ AddressBook.BOOK = {
     'NQ20 7P7U KYCC C1LB QCMV NS22 F21X GFY7 YCAV': '@Ahmad',
     'NQ93 1H6D TS5R YSX9 GFCP DPY7 X3N9 BBVX C1PP': '@Ghocha_Baladewa',
     'NQ49 5DFS B4LH 0TTL BUT4 TBVR E7C2 DL3R 7L4D': '@abdou',
-    'NQ08 LMAK 00XK YYN9 CDXV ADVG CL0U HUBM J670': '@nimiq.ritvars.eu',
     'NQ74 C9KH 191S GSXS 62CU 6H8C UFF1 5U7J 01XX': '@BTC_Rat',
 
     // Exchanges
@@ -444,6 +443,7 @@ AddressBook.BOOK = {
     'NQ15 HNAH YRVH DFVM YHAG BSXG 0QHK KA0Q XDR7': 'Garuda Pool',
     'NQ83 4MVH 53Q4 AL3B Q097 55GJ LUQ3 GSF0 85B7': 'NimiqCafe Staking',
     'NQ02 31N6 3KM5 T6G5 22TN EPF5 5XPY RLHK RMB3': 'NimiqPocket Staking',
+    'NQ08 LMAK 00XK YYN9 CDXV ADVG CL0U HUBM J670': 'Ritvars Staking',
 
     // Private validators
     'NQ60 GH2T VEA2 CUR5 SXAD QU9B 7ELD YMG5 5T7U': 'Private Whalidator',
