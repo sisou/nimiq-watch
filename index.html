@@ -311,7 +311,11 @@
                     <div class="blockinfo-transaction-row">
                         <hash class="ellipsis"><a href="#{%=o.transactions[i].sender_address.replace(/ /g, '+')%}"   onclick="_linkClicked(this);">{%=_labelAddress(o.transactions[i].sender_address)%}</a></hash>
                         <hash class="ellipsis"><a href="#{%=o.transactions[i].receiver_address.replace(/ /g, '+')%}" onclick="_linkClicked(this);">{%=_labelAddress(o.transactions[i].receiver_address)%}</a></hash>
-                        <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.transactions[i].value))%} NIM</span>
+                        <span>
+                            {% if(!o.transactions[i].executed) { %}<s>{% } %}
+                            {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.transactions[i].value))%} NIM
+                            {% if(!o.transactions[i].executed) { %}</s>{% } %}
+                        </span>
                         <span><a href="#{%=o.transactions[i].hash%}" onclick="_linkClicked(this);" class="info-icon"></a></span>
                     </div>
                 {% } %}
@@ -356,8 +360,20 @@
                 </div>
                 <div class="blockinfo-body-row">
                     <label>Value </label>
-                    <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.value))%} NIM</span>
+                    <span>
+                        {% if(!o.executed) { %}<s>{% } %}
+                        {%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.value))%} NIM
+                        {% if(!o.executed) { %}</s>{% } %}
+                    </span>
                 </div>
+                {% if(!o.executed) { %}
+                    <div class="blockinfo-body-row">
+                        <label> </label>
+                        <span>
+                            ⛔ <i>This transaction did not execute</i>
+                        </span>
+                    </div>
+                {% } %}
                 <div class="blockinfo-body-row">
                     <label>Fee </label>
                     <span>{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.fee))%} NIM</span>
@@ -558,9 +574,15 @@
         {% o.otherAddress = o.isReceiver && o.sender_address || o.receiver_address; %}
         <div class="event-item">
             <span class="event-amount {% if(o.isReceiver) print('green'); else print('red'); %}">
+                {% if(!o.executed) { %}<s>{% } %}
                 {% if(o.isReceiver) print('+'); else print('-'); %}{%=_formatBalance(Nimiq.Policy.satoshisToCoins(o.value))%} NIM&#8203;
+                {% if(!o.executed) { %}</s>{% } %}
             </span>
-            <span class="event-name">{% if(o.isReceiver) print('Received'); else print('Sent'); %} transaction</span>
+            <span class="event-name">
+                {% if(!o.executed) { %}<s>{% } %}
+                {% if(o.isReceiver) print('Received'); else print('Sent'); %} transaction
+                {% if(!o.executed) { %}</s>{% } %}
+            </span>
             <span><a href="#{%=o.hash%}" onclick="_linkClicked(this);" class="info-icon"></a></span><br>
             {% if(o.timestamp && o.block_height) { %}
                 <span class="event-datetime">{% var date = new Date(o.timestamp * 1000); print(date.toLocaleString()); %}</span>
